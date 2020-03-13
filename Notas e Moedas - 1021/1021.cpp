@@ -26,15 +26,33 @@ int main() {
         }
     }
 
-    printf("NOTAS:\n");
-    for (int i=0; i<6; i++) {
-        printf("%i nota(s) de R$ %i.00\n", RES[i], VEC[i]/100);
-    }
+    cout << "NOTAS:" << endl; 
 
-    printf("MOEDAS:\n");
-    for (int i=6; i<12; i++) {
-        printf("%i moedas(s) de R$ %s\n", RES[i], bla[i].c_str());
-    }
+    cout << RES[0] << " nota(s) de R$ 100.00" << endl;
+
+    cout << RES[1] << " nota(s) de R$ 50.00" << endl;
+
+    cout << RES[2] << " nota(s) de R$ 20.00" << endl;
+
+    cout << RES[3] << " nota(s) de R$ 10.00" << endl;
+
+    cout << RES[4] << " nota(s) de R$ 5.00" << endl;
+
+    cout << RES[5] << " nota(s) de R$ 2.00" << endl;
+
+    cout << "MOEDAS:" << endl;
+
+    cout << RES[6] << " moeda(s) de R$ 1.00" << endl;
+
+    cout << RES[7] << " moeda(s) de R$ 0.50" << endl;
+
+    cout << RES[8] << " moeda(s) de R$ 0.25" << endl;
+
+    cout << RES[9] << " moeda(s) de R$ 0.10" << endl;
+
+    cout << RES[10] << " moeda(s) de R$ 0.05" << endl;
+
+    cout << RES[11] << " moeda(s) de R$ 0.01" << endl;
 
     return 0;
 }
