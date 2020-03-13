@@ -2,20 +2,15 @@
 
 int VEC[12] = {10000, 5000, 2000, 1000, 500, 200, 100, 50, 25, 10, 5 ,1};
 int RES[12]; 
-double bla[12] = {0,0,0,0,0,0,1, 0.50, 0.25, 0.10, 0.05, 0.01};
 
 using namespace std;
 
+string bla[12] = {"0","0","0","0","0","0","1.00", "0.50", "0.25", "0.10", "0.05", "0.01"};
+
 int main() {
 
-    string c, m;
-    char delimeter('.');
-
-    getline(cin, c, delimeter);
-    getline(cin, m);
-
-    int ic = stoi(c);
-    int im = stoi(m); 
+    int ic, im;
+    scanf("%d.%d", &ic, &im);
 
     int y = (ic*100) + im;
 
@@ -38,7 +33,7 @@ int main() {
 
     printf("MOEDAS:\n");
     for (int i=6; i<12; i++) {
-        printf("%i moedas(s) de R$ %.2lf\n", RES[i], bla[i]);
+        printf("%i moedas(s) de R$ %s\n", RES[i], bla[i].c_str());
     }
 
     return 0;
