@@ -7,7 +7,7 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1021  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1082  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1086  ✔
-* https://www.urionlinejudge.com.br/judge/pt/problems/view/1194
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1194  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1205
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1340
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1357
