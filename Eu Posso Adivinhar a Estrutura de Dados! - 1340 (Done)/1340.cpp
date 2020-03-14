@@ -4,6 +4,10 @@ using namespace std;
 
 int main() {
 
+    string line;
+    int n;
+    while(cin >> n) {
+
     stack<int> s;
     queue<int> q;
     priority_queue<int> p;
@@ -12,9 +16,6 @@ int main() {
     bool isQueue = true;
     bool isPriority = true;
     
-    int n;
-
-    cin >> n;
 
     for(int i=0; i<n; i++) {
         int command, number;
@@ -72,6 +73,6 @@ int main() {
     
     if (!isStack && !isQueue && isPriority)
         cout << "priority queue" << endl;
-
+    }
     return 0;
 }
