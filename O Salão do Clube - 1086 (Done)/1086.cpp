@@ -11,22 +11,31 @@ void print(vector<int> v) {
 }
 
 int calcula(vector<int> v, int largura, int horizontal, int vertical) {
+
+    vector<int>::iterator realBegin = v.begin();
+    int vectorSize = v.size();
+
     if((vertical*100)%(largura) != 0){
         return -1;
     }
+    
+    sort(v.rbegin(), v.rend());
     vector<int>::iterator i;
-    for(i=v.begin(); i != v.end(); i++) {
+    
+    for(i=realBegin; i != v.end(); i++) {
         if((*i) > horizontal) {
-           v.erase(i--);
+            (*i) = -1;
+            realBegin++;
+            vectorSize--;
         }
     }
-    if(v.size() == 0) {
+
+    if(vectorSize == 0) {
         return -1;
     }
 
-    sort(v.rbegin(), v.rend());
 
-    i = v.begin();
+    i = realBegin;
 
     int numTabuasUsadas = 0;
 
@@ -34,29 +43,38 @@ int calcula(vector<int> v, int largura, int horizontal, int vertical) {
         //cout << "FOR: " << vertical << endl;
         //sort(v.rbegin(), v.rend());
         if ((*i) == horizontal) {
-            v.erase(i--);
+            
+            (*i) = -1;
+            realBegin++;
+            vectorSize--;
+
             numTabuasUsadas++;
-            if(v.size() == 0){
+            if(vectorSize == 0){
                 if(j == ((vertical*100)/(largura)) - 1) {
                     return numTabuasUsadas;
                 } else {
                     return -1;
                 }
             }
-            i = v.begin();
+
+            i = realBegin;
+        
         } else {
-            if((v.size() == 1)) {
+            
+            if((vectorSize == 1)) {
                 return -1;
             }
 
-            if((v.size() == 2)) {
-                vector<int>::iterator b = v.begin();
-                vector<int>::iterator e = v.end()-1;
+            if((vectorSize == 2)) {
+                vector<int>::iterator b = realBegin;
+                vector<int>::iterator e = realBegin++;
 
                 if ((*b) + (*e) == horizontal && j == ((vertical*100)/(largura)) - 1) {
+                    
                     numTabuasUsadas++;
                     numTabuasUsadas++;
                     return numTabuasUsadas;
+
                 } else {
                     return -1;
                 }
@@ -67,33 +85,39 @@ int calcula(vector<int> v, int largura, int horizontal, int vertical) {
             }
 
 
-            vector<int>::iterator begin = v.begin()+1;
+            vector<int>::iterator begin = realBegin+1;
             vector<int>::iterator end = v.end()-1;
 
             bool gotIt = false;
             
-            while (((end - v.begin()) - (begin - v.begin())) + 1 > 2)
+            while (((end - realBegin) - (begin - realBegin)) + 1 > 2)
             {
-                vector<int>::iterator middle = begin + ((((end - v.begin()) - (begin - v.begin())) +1) / 2);
+                vector<int>::iterator middle = begin + ((((end - realBegin) - (begin - realBegin)) +1) / 2);
 
                 if ((*i) + (*middle) == horizontal) {
                     numTabuasUsadas++;
                     numTabuasUsadas++;
-                    v.erase(i--);
+                    
+                    (*i) = -1;
+                    realBegin++;
+                    vectorSize--;
+
                     v.erase(middle--);
-                    i = v.begin();
+                    vectorSize--;
+
+                    i = realBegin;
                     gotIt = true;
                     break;
                 }
                 if ((*i) + (*middle) < horizontal) {
                     end = middle;
-                    if ((((end - v.begin()) - (begin - v.begin())) +1) == 2){
+                    if ((((end - realBegin) - (begin - realBegin)) +1) == 2){
                         break;
                     }
                 }
                 if ((*i) + (*middle) > horizontal) {
                     begin = middle;
-                    if ((((end - v.begin()) - (begin - v.begin())) +1) == 2){
+                    if ((((end - realBegin) - (begin - realBegin)) +1) == 2){
                         break;
                     }
                 }
@@ -104,20 +128,38 @@ int calcula(vector<int> v, int largura, int horizontal, int vertical) {
                 if ((*i) + (*begin) == horizontal) {
                     numTabuasUsadas++;
                     numTabuasUsadas++;
-                    v.erase(i--);
+                    
+                    
+                    (*i) = -1;
+                    realBegin++;
+                    vectorSize--;
+                    
+                    
                     v.erase(begin--);
-                    i = v.begin();
+                    vectorSize--;
+
+                    i = realBegin;
                 }
                 else if ((*i) + (*end) == horizontal) {
                     numTabuasUsadas++;
                     numTabuasUsadas++;
-                    v.erase(i--);
+                    
+                    (*i) = -1;
+                    realBegin++;
+                    vectorSize--;
+
                     v.erase(end - 2);
-                    i = v.begin();
+                    vectorSize--;
+
+                    i = realBegin;
                 } else {
-                    v.erase(i--);
+                    
+                    (*i) = -1;
+                    realBegin++;
+                    vectorSize--;
+                    
                     j--;
-                    i = v.begin();
+                    i = realBegin;
                     //return -1;
                 }
             }
