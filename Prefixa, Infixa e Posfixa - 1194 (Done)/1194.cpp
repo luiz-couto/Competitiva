@@ -24,13 +24,28 @@ void posOrdem(char inOrder[],char preOrder[], int size) {
 
 int main() {
 
-    int numNodes;
-    cin >> numNodes;
+    int n;
+    cin >> n;
 
-    // char preOrder[] = { '1','2','3' }; 
-    // char inOrder[] = { '2','1','3' }; 
-    // int size = sizeof(inOrder) / sizeof(inOrder[0]);  
-    // posOrdem(inOrder, preOrder, size);
-    // cout << endl;
+    for (int i=0; i<n; i++) {
+        int numNodes;
+        cin >> numNodes;
+
+        char preOrder[numNodes];
+
+        for (int i=0; i<numNodes; i++) {
+            cin >> preOrder[i];
+        }
+
+        char inOrder[numNodes];
+
+        for (int i=0; i<numNodes; i++) {
+            cin >> inOrder[i];
+        }
+
+        int size = sizeof(inOrder) / sizeof(inOrder[0]);  
+        posOrdem(inOrder, preOrder, size);
+        cout << endl;
+    }
     return 0; 
 }
