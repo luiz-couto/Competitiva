@@ -165,18 +165,39 @@ int main() {
 
         }
 
-        for(auto par:lineOne) {
-            cout << par.first << par.second << " ";
+        for(int i=0; i<lineOne.size(); i++) {
+
+            if (i == lineOne.size() -1) {
+                cout << lineOne[i].first << lineOne[i].second;
+            } else {
+                cout << lineOne[i].first << lineOne[i].second << " ";
+            }
+
+            
         }
         cout << endl;
         
-        for(auto par:lineTwo) {
-            cout << par.first << par.second << " ";
+        for(int i=0; i<lineTwo.size(); i++) {
+
+            if (i == lineTwo.size() -1) {
+                cout << lineTwo[i].first << lineTwo[i].second;
+            } else {
+                cout << lineTwo[i].first << lineTwo[i].second << " ";
+            }
+
+            
         }
         cout << endl;
         
-        for(auto par:lineThree) {
-            cout << par.first << par.second << " ";
+        for(int i=0; i<lineThree.size(); i++) {
+
+            if (i == lineThree.size() -1) {
+                cout << lineThree[i].first << lineThree[i].second;
+            } else {
+                cout << lineThree[i].first << lineThree[i].second << " ";
+            }
+
+            
         }
         cout << endl;
 
