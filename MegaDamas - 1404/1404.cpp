@@ -6,14 +6,22 @@ using namespace std;
 int greateer = 0;
 
 
-void recursiv(int casa, vector<int> ve, int pecasComidas, vector<vector<int> > tabuleiro) {
+void recursiv(int casa, vector<int> ve, int pecasComidas, vector<vector<int> > tabuleiro, int quemChamou) {
+
+    //cout << "casa: "<< casa << endl;
+
     for (int i=0; i<tabuleiro[casa-1].size(); i++) {
-        if (ve[tabuleiro[casa-1][i]] == 2) {
+        if (ve[tabuleiro[casa-1][i]] == 2 && tabuleiro[casa-1][i] != -5) {
+            //cout << "olhando para:" << tabuleiro[casa-1][i] << endl;
             if(ve[tabuleiro[tabuleiro[casa-1][i] - 1][i]] == 0) {
-                vector<int> novo = ve;
-                novo[tabuleiro[casa-1][i]] = 0;
-                int g = pecasComidas + 1;
-                recursiv(tabuleiro[tabuleiro[casa-1][i] - 1][i], novo, g, tabuleiro);
+                if (tabuleiro[tabuleiro[casa-1][i] - 1][i] != -5 && tabuleiro[tabuleiro[casa-1][i] - 1][i] != quemChamou) {
+                    //vector<int> novo = ve;
+                    ve[tabuleiro[casa-1][i]] = 0;
+                    int g = pecasComidas + 1;
+                    recursiv(tabuleiro[tabuleiro[casa-1][i] - 1][i], ve, g, tabuleiro, casa);
+                    ve[tabuleiro[casa-1][i]] = 2;
+                    //cout << "Voltei da:" << casa << endl;
+                }
             }
         }
     }
@@ -21,6 +29,8 @@ void recursiv(int casa, vector<int> ve, int pecasComidas, vector<vector<int> > t
     if (pecasComidas > greateer) {
         greateer = pecasComidas;
     }
+
+    //cout << casa << ": " << pecasComidas << endl;
 
 }
 
@@ -62,20 +72,20 @@ int main() {
                     if (j%m == 1) { //borda esquerda
 
                         if (below > 0) {
-                            casa.push_back(0);
+                            casa.push_back(-5);
                             casa.push_back(below);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                         
                         
                         if (above < ultimo){
-                            casa.push_back(0);
+                            casa.push_back(-5);
                             casa.push_back(above + 1);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                         
                     }
@@ -83,18 +93,18 @@ int main() {
 
                         if (below > 1) {
                             casa.push_back(below - 1);
-                            casa.push_back(0);
+                            casa.push_back(-5);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                         
                         if (above < ultimo){
                             casa.push_back(above);
-                            casa.push_back(0);
+                            casa.push_back(-5);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
 
 
@@ -104,16 +114,16 @@ int main() {
                             casa.push_back(below - 1);
                             casa.push_back(below);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                         
                         if (above < ultimo) {
                             casa.push_back(above);
                             casa.push_back(above + 1);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                         
                     }
@@ -133,19 +143,19 @@ int main() {
                     if (j%m == 1) { // borda esquerda
                         
                         if (below > 0) {
-                           casa.push_back(0);
+                           casa.push_back(-5);
                            casa.push_back(below);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                         
                         if (above < ultimo) {
-                            casa.push_back(0);
+                            casa.push_back(-5);
                             casa.push_back(above);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                        
                     }
@@ -154,28 +164,28 @@ int main() {
                         
                         if (below > 0) {
                             casa.push_back(below + 1);
-                            casa.push_back(0);
+                            casa.push_back(-5);
                         } else {
-                            casa.push_back(0);
-                            casa.push_back(0);
+                            casa.push_back(-5);
+                            casa.push_back(-5);
                         }
                         
                         
                         if(corInicial) {
                             if (above <= ultimo) {
                                 casa.push_back(above - 1);
-                                casa.push_back(0);
+                                casa.push_back(-5);
                             } else {
-                                casa.push_back(0);
-                                casa.push_back(0);
+                                casa.push_back(-5);
+                                casa.push_back(-5);
                             }
                         } else {
                             if (above <= ultimo + 1) {
                                 casa.push_back(above -1);
-                                casa.push_back(0);
+                                casa.push_back(-5);
                             } else {
-                                casa.push_back(0);
-                                casa.push_back(0);
+                                casa.push_back(-5);
+                                casa.push_back(-5);
                             }
                         }
 
@@ -186,16 +196,16 @@ int main() {
                                 casa.push_back(below - 1);
                                 casa.push_back(below);
                             } else {
-                                casa.push_back(0);
-                                casa.push_back(0);
+                                casa.push_back(-5);
+                                casa.push_back(-5);
                             }
                         } else {
                             if (below >= 0) {
                                 casa.push_back(below + 1);
                                 casa.push_back(below + 2);
                             } else {
-                                casa.push_back(0);
-                                casa.push_back(0);
+                                casa.push_back(-5);
+                                casa.push_back(-5);
                             }
                         }
                         
@@ -204,16 +214,16 @@ int main() {
                                 casa.push_back(above - 1);
                                 casa.push_back(above);
                             } else {
-                                casa.push_back(0);
-                                casa.push_back(0);
+                                casa.push_back(-5);
+                                casa.push_back(-5);
                             }
                         } else {
                             if (above <= ultimo) {
                                 casa.push_back(above - 1);
                                 casa.push_back(above);
                             } else {
-                                casa.push_back(0);
-                                casa.push_back(0);
+                                casa.push_back(-5);
+                                casa.push_back(-5);
                             }
                         }
                         
@@ -243,11 +253,14 @@ int main() {
 
     for (int i=1; i<=v.size(); i++) {
         if (v[i] == 1) {
-            recursiv(i,v,0,tabuleiro);
+            v[i] = 0;
+            recursiv(i,v,0,tabuleiro, -5);
+            v[i] = 1;
         }
     }
 
     cout << greateer << endl;
+    
     }
     return 0;
 }
