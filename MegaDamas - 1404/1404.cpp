@@ -28,35 +28,61 @@ int main() {
                     
                     if (j%m == 1) { //borda esquerda
 
-                        if (above < ultimo){
-                            casa.push_back(above + 1);
-                        }
-
                         if (below > 0) {
+                            casa.push_back(0);
                             casa.push_back(below);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
+                        }
+                        
+                        
+                        if (above < ultimo){
+                            casa.push_back(0);
+                            casa.push_back(above + 1);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
                         }
                         
                     }
                     else if (j%m == 0) { //borda direita
 
-                        if (above < ultimo){
-                            casa.push_back(above);
-                        }
-
                         if (below > 1) {
                             casa.push_back(below - 1);
+                            casa.push_back(0);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
+                        }
+                        
+                        if (above < ultimo){
+                            casa.push_back(above);
+                            casa.push_back(0);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
                         }
 
+
                     } else { //meio
+                        
+                        if (below > 0) {
+                            casa.push_back(below - 1);
+                            casa.push_back(below);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
+                        }
+                        
                         if (above < ultimo) {
                             casa.push_back(above);
                             casa.push_back(above + 1);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
                         }
-
-                        if (below > 0) {
-                            casa.push_back(below);
-                            casa.push_back(below - 1);
-                        }
+                        
                     }
                 }
 
@@ -71,62 +97,93 @@ int main() {
                     int above = casNum + pulo;
                     int below = casNum - pulo;
 
-                    if (casNum == 2) {
-                        cout << "BELOW: " << below << endl;
-                    }
-
                     if (j%m == 1) { // borda esquerda
                         
-                        if (above < ultimo) {
-                            casa.push_back(above);
+                        if (below > 0) {
+                           casa.push_back(0);
+                           casa.push_back(below);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
                         }
                         
-                        if (below > 0) {
-                           casa.push_back(below);
+                        if (above < ultimo) {
+                            casa.push_back(0);
+                            casa.push_back(above);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
                         }
+                       
                     }
                     else if (j%m == 0) { // borda direita
 
+                        
+                        if (below > 0) {
+                            casa.push_back(below + 1);
+                            casa.push_back(0);
+                        } else {
+                            casa.push_back(0);
+                            casa.push_back(0);
+                        }
+                        
+                        
                         if(corInicial) {
                             if (above <= ultimo) {
                                 casa.push_back(above - 1);
+                                casa.push_back(0);
+                            } else {
+                                casa.push_back(0);
+                                casa.push_back(0);
                             }
                         } else {
                             if (above <= ultimo + 1) {
                                 casa.push_back(above -1);
+                                casa.push_back(0);
+                            } else {
+                                casa.push_back(0);
+                                casa.push_back(0);
                             }
                         }
 
-                        if (below > 0) {
-                            casa.push_back(below + 1);
-                        }
                     } else { // meio
                         
-                        if(corInicial) {
-                            if (above <= ultimo) {
-                                casa.push_back(above);
-                                casa.push_back(above -1);
-                            }
-                        } else {
-                            if (above <= ultimo) {
-                                casa.push_back(above);
-                                casa.push_back(above -1);
-                            }
-                        }
-                        
-                        
-
                         if (corInicial) {
                             if (below > 0) {
+                                casa.push_back(below - 1);
                                 casa.push_back(below);
-                                casa.push_back(below-1);
+                            } else {
+                                casa.push_back(0);
+                                casa.push_back(0);
                             }
                         } else {
                             if (below >= 0) {
                                 casa.push_back(below + 1);
                                 casa.push_back(below + 2);
+                            } else {
+                                casa.push_back(0);
+                                casa.push_back(0);
                             }
                         }
+                        
+                        if(corInicial) {
+                            if (above <= ultimo) {
+                                casa.push_back(above - 1);
+                                casa.push_back(above);
+                            } else {
+                                casa.push_back(0);
+                                casa.push_back(0);
+                            }
+                        } else {
+                            if (above <= ultimo) {
+                                casa.push_back(above - 1);
+                                casa.push_back(above);
+                            } else {
+                                casa.push_back(0);
+                                casa.push_back(0);
+                            }
+                        }
+                        
                         
                     }
                     
@@ -150,6 +207,11 @@ int main() {
         }
         cout << endl;
     }
+
+
+
+
+
 
     return 0;
 }
