@@ -4,13 +4,17 @@ using namespace std;
 
 
 int greateer = 0;
-
+int numberIterations = 0;
 
 void recursiv(int casa, vector<int> ve, int pecasComidas, vector<vector<int> > tabuleiro, int quemChamou) {
 
     //cout << "casa: "<< casa << endl;
 
     for (int i=0; i<tabuleiro[casa-1].size(); i++) {
+        numberIterations++;
+        if (numberIterations > 100000) {
+            break;
+        }
         if (ve[tabuleiro[casa-1][i]] == 2 && tabuleiro[casa-1][i] != -5) {
             //cout << "olhando para:" << tabuleiro[casa-1][i] << endl;
             if(ve[tabuleiro[tabuleiro[casa-1][i] - 1][i]] == 0) {
@@ -45,6 +49,7 @@ int main() {
     vector<vector<int> > tabuleiro;
     vector<int> v;
     greateer = 0;
+    numberIterations = 0;
 
     cin >> n;
     cin >> m;
@@ -259,6 +264,7 @@ int main() {
         }
     }
 
+    //cout << "Iterations:" << numberIterations << endl;
     cout << greateer << endl;
     
     }
