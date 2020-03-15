@@ -2,13 +2,32 @@
 
 using namespace std;
 
+vector<int> v;
+vector<vector<int> > tabuleiro;
+
+
+void recursiv(int casa, vector<int> ve, int pecasComidas) {
+    for (int i=0; i<tabuleiro[casa-1].size(); i++) {
+        if (ve[tabuleiro[casa-1][i]] == 2) {
+            if(ve[tabuleiro[tabuleiro[casa-1][i] - 1][i]] == 0) {
+                vector<int> novo = ve;
+                novo[tabuleiro[casa-1][i]] = 0;
+                int g = pecasComidas + 1;
+                recursiv(tabuleiro[tabuleiro[casa-1][i] - 1][i], novo, g);
+            }
+        }
+    }
+
+    cout << casa << ": " << pecasComidas << endl;
+}
+
+
+
 int main() {
 
     int n,m;
 
     cin >> n >> m;
-
-    vector<vector<int> > tabuleiro;
 
     int corInicial = true;
     int casNum = 1;
@@ -200,15 +219,28 @@ int main() {
 
     }
 
-    for(int i=0; i<tabuleiro.size(); i++) {
-        cout << i+1 << ": ";
-        for (auto j:tabuleiro[i]) {
-            cout << j << " - ";
-        }
-        cout << endl;
+    // for(int i=0; i<tabuleiro.size(); i++) {
+    //     cout << i+1 << ": ";
+    //     for (auto j:tabuleiro[i]) {
+    //         cout << j << " - ";
+    //     }
+    //     cout << endl;
+    // }
+
+    
+    v.push_back(-1);
+
+    for (int i=0; i<tabuleiro.size(); i++) {
+        int pec;
+        cin >> pec;
+        v.push_back(pec);
     }
 
-
+    for (int i=1; i<=v.size(); i++) {
+        if (v[i] == 1) {
+            recursiv(i,v,0);
+        }
+    }
 
 
 
