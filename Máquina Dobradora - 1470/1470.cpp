@@ -26,12 +26,22 @@ vector<int> turnTheTape(int pos1, int pos2, vector<int> v) {
     begin = begin + entreEles/2;
     end = end - entreEles/2;
 
-    cout << *begin << endl;
-    cout << *end << endl;
+    // cout << *begin << endl;
+    // cout << *end << endl;
 
-    while(1) {
+    // cout << v.end() - end << endl;
+    // cout << begin - v.begin() + 1 << endl;
 
-        resultado.push_back((*begin) + (*end));
+    int frt = 1;
+    while(1) { 
+
+        if (v.end() - end < begin - v.begin() + 1 && resultado.size() != 0 ) {
+            resultado.insert(resultado.end()-frt, (*begin) + (*end));
+            frt++;
+        } else {
+            resultado.push_back((*begin) + (*end));
+        }
+        
 
         if (begin == v.begin() || end == v.end()-1) {
             begin--;
@@ -88,7 +98,7 @@ int main() {
     }
     cout << endl;
 
-    vector<int> test = turnTheTape(0,2,entrada);
+    vector<int> test = turnTheTape(1,6,entrada);
 
     for(auto i:test) {
         cout << i << " - ";
