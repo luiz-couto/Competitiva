@@ -5,6 +5,55 @@ using namespace std;
 vector<int> entrada;
 vector<int> saida;
 
+// bool contains_sum(vector<int>::iterator begin, vector<int>::iterator end, int sum, int numEl)
+// {
+//   while (begin != end)
+//   {
+//     --end;
+//     if (*end > sum)
+//       continue;
+//     if (contains_sum(begin, end, sum - *end, --numEl)) {
+//         if(numEl < 0) {
+//             return false;
+//         }
+//         return true;
+//     }
+      
+//   }
+//   return sum == 0;
+// }
+
+void sum_up_recursive(vector<int> numbers, int target, vector<int> partial)
+{
+    int s = 0;
+    for(int x:partial){
+        s += x;
+    } 
+
+    if (s == target){
+        for (int i:partial) {
+            cout << i << " - ";
+        }
+        cout << endl;
+    }
+
+    if (s >= target)
+        return;
+
+    for (int i = 0; i < numbers.size(); i++)
+    {
+        vector<int> remaining = vector<int>();
+        int n = numbers[i];
+        for (int j = i + 1; j < numbers.size(); j++){
+            remaining.push_back(numbers[j]);
+        }
+
+        vector<int> partial_rec = vector<int>(partial);
+        partial_rec.push_back(n);
+        sum_up_recursive(remaining, target, partial_rec);
+    }
+}
+
 vector<int> turnTheTape(int pos1, int pos2, vector<int> v) {
     // verfifcar se tem um num par de elementos entre eles
 
@@ -98,12 +147,22 @@ int main() {
     }
     cout << endl;
 
-    vector<int> test = turnTheTape(1,6,entrada);
+    vector<int>::iterator b,e;
+    b = entrada.begin();
+    e = entrada.end();
 
-    for(auto i:test) {
-        cout << i << " - ";
-    }
-    cout << endl;
+    sum_up_recursive(entrada, 50, vector<int>());
+    //cout << contains_sum(b,e,50,3);
+    //vector<int> test = turnTheTape(1,6,entrada);
+
+    // for(auto i:test) {
+    //     cout << i << " - ";
+    // }
+    // cout << endl;
+
+    // for (int i=0; i<saida.size(); i++) {
+    //  //soma de 1 num
+    // }
 
     return 0;
 }
