@@ -33,23 +33,23 @@ void sum_up_recursive(vector<pair<int,int> > numbers, int target, vector<pair<in
     }
 }
 
-vector<int> turnTheTape(int pos1, int pos2, vector<int> v) {
+vector<pair<int, int> > turnTheTape(int pos1, int pos2, vector<pair<int, int> > v) {
     // verfifcar se tem um num par de elementos entre eles
 
     if (pos2 <= pos1) {
-        return vector<int>();
+        return vector<pair<int, int> >();
     }
 
     int entreEles = pos2-pos1-1;
 
     if ((entreEles)%2 != 0) {
-        return vector<int>();
+        return vector<pair<int, int> >();
     }
 
-    vector<int>::iterator begin = v.begin() + pos1;
-    vector<int>::iterator end = v.begin() + pos2;
+    vector<pair<int, int> >::iterator begin = v.begin() + pos1;
+    vector<pair<int, int> >::iterator end = v.begin() + pos2;
 
-    vector<int> resultado;
+    vector<pair<int, int> > resultado;
 
     begin = begin + entreEles/2;
     end = end - entreEles/2;
@@ -61,13 +61,16 @@ vector<int> turnTheTape(int pos1, int pos2, vector<int> v) {
     // cout << begin - v.begin() + 1 << endl;
 
     int frt = 1;
+
     while(1) { 
 
         if (v.end() - end < begin - v.begin() + 1 && resultado.size() != 0 ) {
-            resultado.insert(resultado.end()-frt, (*begin) + (*end));
+            pair<int, int> p = make_pair((*begin).first + (*end).first, 0);
+            resultado.insert(resultado.end()-frt,p);
             frt++;
         } else {
-            resultado.push_back((*begin) + (*end));
+            pair<int, int> p = make_pair((*begin).first + (*end).first, 0);
+            resultado.push_back(p);
         }
         
 
@@ -82,7 +85,8 @@ vector<int> turnTheTape(int pos1, int pos2, vector<int> v) {
     }
 
     while (end != v.end()) {
-        resultado.push_back(*end);
+        pair<int, int> pr = make_pair((*end).first, 0);
+        resultado.push_back(pr);
         end++;
     }
 
@@ -90,12 +94,69 @@ vector<int> turnTheTape(int pos1, int pos2, vector<int> v) {
         if (begin == v.begin()-1) {
             break;
         }
-        resultado.insert(resultado.begin(), (*begin));
+        pair<int, int> pr = make_pair((*begin).first, 0);
+        resultado.insert(resultado.begin(),pr);
         begin--;
+    }
+
+    int posi = 0;
+    
+    for(int i=0; i<resultado.size(); i++) {
+        resultado[i] = make_pair(resultado[i].first, posi);
+        posi++;
     }
 
     return resultado;
 
+
+}
+
+bool recursiv(int position, vector<pair<int,int> > entrada, vector<int> saida) {
+    if (position == saida.size()) {
+        return true;
+    }
+
+    int sum = saida[position];
+    vector<vector<pair<int, int> > > all;
+    
+    sum_up_recursive(entrada, sum, vector<pair<int,int> >(), all);
+
+    std::sort(all.begin(), all.end(), [](const vector<pair<int,int> > & a, const vector<pair<int,int> > & b){ return a.size() < b.size(); });
+
+    for(auto vp:all) {
+        if (vp.size() == 1) {
+            if(vp[0].second == position){
+                if (recursiv(position + 1, entrada, saida)){
+                    return true;
+                }
+            }
+
+        }
+        bool getIt = false;
+        for(int i=0; i<1; i++) {
+            vector<pair<int, int> > t = turnTheTape(vp[i].second, vp[i+1].second, entrada);
+            for (auto k:t) {
+                cout << k.first << " -> ";
+            }
+            cout << endl;
+            if (t.size() != 0) {
+
+                if(vp[i].first + vp[i].second != sum) {
+                    if (recursiv(position, t, saida)){
+                        return true;
+                    }
+                } else {
+                    if (recursiv(position+1, t, saida)) {
+                        return true;
+                    }
+                }
+
+                
+            }
+        }
+    }
+
+    return false;
 
 }
 
@@ -128,31 +189,28 @@ int main() {
         cout << i.first << " - ";
     }
     cout << endl;
+
+    cout << recursiv(0,entrada, saida) << endl;
     
-    vector<vector<pair<int, int> > > all;
+    //vector<vector<pair<int, int> > > all;
 
-    sum_up_recursive(entrada, 10, vector<pair<int,int> >(), all);
+    // sum_up_recursive(entrada, 10, vector<pair<int,int> >(), all);
 
-    sort(all.begin(), all.end(), [](const vector<pair<int,int> > & a, const vector<pair<int,int> > & b){ return a.size() < b.size(); });
+    // std::sort(all.begin(), all.end(), [](const vector<pair<int,int> > & a, const vector<pair<int,int> > & b){ return a.size() < b.size(); });
   
-    for(auto y:all) {
-        for(auto q:y) {
-            cout << q.second << " - ";
-        }
-        cout << endl;
-    }
+    // for(auto y:all) {
+    //     for(auto q:y) {
+    //         cout << q.second << " - ";
+    //     }
+    //     cout << endl;
+    // }
 
-    //cout << contains_sum(b,e,50,3);
-    //vector<int> test = turnTheTape(1,6,entrada);
+    //vector<pair<int, int> > test = turnTheTape(1,6,entrada);
 
     // for(auto i:test) {
-    //     cout << i << " - ";
+    //     cout << i.second << " - ";
     // }
     // cout << endl;
-
-    // for (int i=0; i<saida.size(); i++) {
-    //  //soma de 1 num
-    // }
 
     return 0;
 }
