@@ -131,7 +131,7 @@ int main() {
     
     vector<vector<pair<int, int> > > all;
 
-    sum_up_recursive(entrada, 50, vector<pair<int,int> >(), all);
+    sum_up_recursive(entrada, 10, vector<pair<int,int> >(), all);
 
     sort(all.begin(), all.end(), [](const vector<pair<int,int> > & a, const vector<pair<int,int> > & b){ return a.size() < b.size(); });
   
