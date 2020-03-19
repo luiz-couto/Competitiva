@@ -23,7 +23,7 @@ vector<int> saida;
 //   return sum == 0;
 // }
 
-void sum_up_recursive(vector<int> numbers, int target, vector<int> partial)
+void sum_up_recursive(vector<int> numbers, int target, vector<int> partial, vector<vector<int> > &all)
 {
     int s = 0;
     for(int x:partial){
@@ -31,10 +31,7 @@ void sum_up_recursive(vector<int> numbers, int target, vector<int> partial)
     } 
 
     if (s == target){
-        for (int i:partial) {
-            cout << i << " - ";
-        }
-        cout << endl;
+        all.push_back(partial);
     }
 
     if (s >= target)
@@ -50,7 +47,7 @@ void sum_up_recursive(vector<int> numbers, int target, vector<int> partial)
 
         vector<int> partial_rec = vector<int>(partial);
         partial_rec.push_back(n);
-        sum_up_recursive(remaining, target, partial_rec);
+        sum_up_recursive(remaining, target, partial_rec, all);
     }
 }
 
@@ -151,7 +148,20 @@ int main() {
     b = entrada.begin();
     e = entrada.end();
 
-    sum_up_recursive(entrada, 50, vector<int>());
+    
+    vector<vector<int> > all;
+
+    sum_up_recursive(entrada, 50, vector<int>(), all);
+
+    sort(all.begin(), all.end(), [](const vector<int> & a, const vector<int> & b){ return a.size() < b.size(); });
+  
+    for(auto y:all) {
+        for(int q:y) {
+            cout << q << " - ";
+        }
+        cout << endl;
+    }
+
     //cout << contains_sum(b,e,50,3);
     //vector<int> test = turnTheTape(1,6,entrada);
 
