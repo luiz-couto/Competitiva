@@ -2,32 +2,14 @@
 
 using namespace std;
 
-vector<int> entrada;
+vector<pair<int,int> > entrada;
 vector<int> saida;
 
-// bool contains_sum(vector<int>::iterator begin, vector<int>::iterator end, int sum, int numEl)
-// {
-//   while (begin != end)
-//   {
-//     --end;
-//     if (*end > sum)
-//       continue;
-//     if (contains_sum(begin, end, sum - *end, --numEl)) {
-//         if(numEl < 0) {
-//             return false;
-//         }
-//         return true;
-//     }
-      
-//   }
-//   return sum == 0;
-// }
-
-void sum_up_recursive(vector<int> numbers, int target, vector<int> partial, vector<vector<int> > &all)
+void sum_up_recursive(vector<pair<int,int> > numbers, int target, vector<pair<int,int> > partial, vector<vector<pair<int, int> > > &all)
 {
     int s = 0;
-    for(int x:partial){
-        s += x;
+    for(auto x:partial){
+        s += x.first;
     } 
 
     if (s == target){
@@ -39,13 +21,13 @@ void sum_up_recursive(vector<int> numbers, int target, vector<int> partial, vect
 
     for (int i = 0; i < numbers.size(); i++)
     {
-        vector<int> remaining = vector<int>();
-        int n = numbers[i];
+        vector<pair<int,int> > remaining = vector<pair<int,int> >();
+        pair<int, int> n = numbers[i];
         for (int j = i + 1; j < numbers.size(); j++){
             remaining.push_back(numbers[j]);
         }
 
-        vector<int> partial_rec = vector<int>(partial);
+        vector<pair<int,int> > partial_rec = vector<pair<int,int> >(partial);
         partial_rec.push_back(n);
         sum_up_recursive(remaining, target, partial_rec, all);
     }
@@ -128,7 +110,10 @@ int main() {
     for (int i=0; i<n; i++) {
         int number;
         cin >> number;
-        entrada.push_back(number);
+        pair<int, int> p;
+        p.first = number;
+        p.second = i;
+        entrada.push_back(p);
     }
 
     cin >> m;
@@ -140,24 +125,19 @@ int main() {
     }
 
     for(auto i:entrada) {
-        cout << i << " - ";
+        cout << i.first << " - ";
     }
     cout << endl;
-
-    vector<int>::iterator b,e;
-    b = entrada.begin();
-    e = entrada.end();
-
     
-    vector<vector<int> > all;
+    vector<vector<pair<int, int> > > all;
 
-    sum_up_recursive(entrada, 50, vector<int>(), all);
+    sum_up_recursive(entrada, 50, vector<pair<int,int> >(), all);
 
-    sort(all.begin(), all.end(), [](const vector<int> & a, const vector<int> & b){ return a.size() < b.size(); });
+    sort(all.begin(), all.end(), [](const vector<pair<int,int> > & a, const vector<pair<int,int> > & b){ return a.size() < b.size(); });
   
     for(auto y:all) {
-        for(int q:y) {
-            cout << q << " - ";
+        for(auto q:y) {
+            cout << q.second << " - ";
         }
         cout << endl;
     }
