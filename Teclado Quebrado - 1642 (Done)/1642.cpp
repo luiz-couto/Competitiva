@@ -4,10 +4,14 @@ using namespace std;
 
 int main() {
     
+    while(1) {
     string mStr,frase;
 
     getline(cin, mStr);
     int m = stoi(mStr);
+    if(m == 0){
+        break;
+    }
 
     getline(cin, frase);
 
@@ -26,8 +30,6 @@ int main() {
         index.insert(pair<char, int>(c,k));
         k++;
     }
-
-    //cout << vCounter[index['a']].second << endl;
 
     int resultado = 0;
     int greater = 0;
@@ -62,6 +64,7 @@ int main() {
     }
 
     cout << greater << endl;
+    }
 
     return 0;
 }
