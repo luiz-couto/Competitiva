@@ -54,12 +54,6 @@ vector<pair<int, int> > turnTheTape(int pos1, int pos2, vector<pair<int, int> > 
     begin = begin + entreEles/2;
     end = end - entreEles/2;
 
-    // cout << *begin << endl;
-    // cout << *end << endl;
-
-    // cout << v.end() - end << endl;
-    // cout << begin - v.begin() + 1 << endl;
-
     int frt = 1;
 
     while(1) { 
@@ -126,6 +120,13 @@ bool recursiv(int position, vector<pair<int,int> > entrada, vector<int> saida) {
     for(auto vp:all) {
         if (vp.size() == 1) {
             if(vp[0].second == position){
+                std::cout << vp[0].first << " ----> " << saida.size() << endl;
+                if (recursiv(position + 1, entrada, saida)){
+                    return true;
+                }
+            } else if (vp[0].first == 7) {
+                cout << "ENTROU Q" << endl;
+                reverse(entrada.begin(), entrada.end());
                 if (recursiv(position + 1, entrada, saida)){
                     return true;
                 }
@@ -191,26 +192,6 @@ int main() {
     cout << endl;
 
     cout << recursiv(0,entrada, saida) << endl;
-    
-    //vector<vector<pair<int, int> > > all;
-
-    // sum_up_recursive(entrada, 10, vector<pair<int,int> >(), all);
-
-    // std::sort(all.begin(), all.end(), [](const vector<pair<int,int> > & a, const vector<pair<int,int> > & b){ return a.size() < b.size(); });
-  
-    // for(auto y:all) {
-    //     for(auto q:y) {
-    //         cout << q.second << " - ";
-    //     }
-    //     cout << endl;
-    // }
-
-    //vector<pair<int, int> > test = turnTheTape(1,6,entrada);
-
-    // for(auto i:test) {
-    //     cout << i.second << " - ";
-    // }
-    // cout << endl;
 
     return 0;
 }
