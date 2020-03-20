@@ -34,14 +34,16 @@ int main() {
 
     int pointer = 0;
     int contador = 0;
-    for(int i=0; i<frase.length(); i++) {
 
+    for(int i=0; i<frase.length(); i++) {
         if(vCounter[index[frase[i]]].second == 0) {
             contador = contador + 1;
             if (contador == m + 1) {
-                while(1) {
-                    vCounter[frase[pointer]].second = vCounter[frase[pointer]].second - 1;
-                    if(vCounter[frase[pointer]].second == 0) {
+                while(1) { 
+                    vCounter[index[frase[pointer]]].second = vCounter[index[frase[pointer]]].second - 1;
+                    resultado = resultado - 1;
+                    if(vCounter[index[frase[pointer]]].second == 0) {
+                        pointer++;
                         break;
                     } else {
                         pointer++;
@@ -51,11 +53,15 @@ int main() {
             }
         }
         vCounter[index[frase[i]]].second = vCounter[index[frase[i]]].second + 1;
+        resultado = resultado + 1;
 
+        if(resultado > greater) {
+            greater = resultado;
+        }
 
-
-        
     }
+
+    cout << greater << endl;
 
     return 0;
 }
