@@ -2,12 +2,12 @@
 
 using namespace std;
 
-vector<int> v;
+vector<string> v;
 int numJoias = 0;
 
-bool verificaNovo(int n) {
+bool verificaNovo(string s) {
     for(auto x:v) {
-        if (n == x) {
+        if(s == x) {
             return false;
         }
     }
@@ -26,12 +26,11 @@ int main() {
                 s[i] = '2';
             }
         }
-        int n = stoi(s);
-        if(verificaNovo(n)) {
-            v.push_back(n);
+        if(verificaNovo(s)) {
+            v.push_back(s);
             numJoias++;
         }
     }
-    cout << numJoias << endl;
+    std::cout << numJoias << endl;
     return 0;
 }
