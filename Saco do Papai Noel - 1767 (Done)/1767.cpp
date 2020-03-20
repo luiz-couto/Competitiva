@@ -5,8 +5,23 @@ using namespace std;
 int max(int a, int b) { return (a > b)? a : b; }
 
 int main() {
+    int numTestes;
+    cin >> numTestes;
+
+    for(int p=0; p<numTestes; p++) {
+
+    int pck;
+    cin >> pck;
+    
     vector<int> brinquedos;
     vector<int> pesos;
+
+    for(int x=0; x<pck; x++) {
+        int br,weig;
+        cin >> br >> weig;
+        brinquedos.push_back(br);
+        pesos.push_back(weig);
+    }
 
     int T[brinquedos.size()+1][50 + 1];
 
@@ -47,7 +62,8 @@ int main() {
 	}
 
     cout << "Peso: " << pesoTotal << " kg" << endl;
-    cout << "sobra(m) " << brinquedos.size() - numPacotesUsados << " pacote(s)" << endl;  
-
+    cout << "sobra(m) " << brinquedos.size() - numPacotesUsados << " pacote(s)" << endl;
+    cout << endl;
+    }
     return 0;
 }
