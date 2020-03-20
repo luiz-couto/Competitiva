@@ -4,11 +4,14 @@ using namespace std;
 
 int max(int a, int b) { return (a > b)? a : b; }
 
-int getToys(int maxSum, vector<int> pesos, vector<int> brinquedos) {
-    int T[brinquedos.size()+1][maxSum + 1];
+int main() {
+    vector<int> brinquedos;
+    vector<int> pesos;
+
+    int T[brinquedos.size()+1][50 + 1];
 
     for (int i=0; i<=brinquedos.size(); i++) {
-        for (int w=0; w<=maxSum; w++) {
+        for (int w=0; w<=50; w++) {
             if(i==0 || w==0){
                 T[i][w] = 0;
             }
@@ -22,26 +25,29 @@ int getToys(int maxSum, vector<int> pesos, vector<int> brinquedos) {
             
         }
     }
-    return T[brinquedos.size()][maxSum];
-}
 
-int main() {
-    vector<int> val;
-    val.push_back(6);
-    val.push_back(21);
-    val.push_back(72);
-    val.push_back(143);
+    cout << T[brinquedos.size()][50] << " brinquedos" << endl;
+
+    int n = brinquedos.size();
+    int M = 50;
     
+    int numPacotesUsados = 0;
+    int pesoTotal = 0;
 
-    vector<int> wt;
-    wt.push_back(17);
-    wt.push_back(23);
-    wt.push_back(24);
-    wt.push_back(2);
+    while (n != 0) {
+		if (T[n][M] != T[n - 1][M]) {
+			//System.out.println("\tPackage " + n + " with W = " + pesos[n - 1] + " and Value = " + brinquedos[n - 1]);
+			//cout << "Pacote " << n << " com peso = " << pesos[n - 1] << " e " << brinquedos[n - 1] << " brinquedos" << endl;
+            numPacotesUsados++;
+            pesoTotal = pesoTotal + pesos[n-1];
+			M = M - pesos[n-1];
+		}
+		
+		n--;
+	}
 
-
-    cout << getToys(50, wt, val) << endl;
-
+    cout << "Peso: " << pesoTotal << " kg" << endl;
+    cout << "sobra(m) " << brinquedos.size() - numPacotesUsados << " pacote(s)" << endl;  
 
     return 0;
 }
