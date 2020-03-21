@@ -3,8 +3,8 @@
 using namespace std;
 
 int main() {
-    long int n;
-    set<long int> s;
+    long long int n;
+    set<long long int> s;
     
     cin >> n;
 
@@ -32,13 +32,13 @@ int main() {
     
     //cout << s.size() << endl;
 
-    int despojados = 0;
+    long long int despojados = 0;
 
     for(int i=s.size(); i>1; i--) {
-        int times = 1;
-        int fac = s.size();
-        int iFactorial = 1;
-        for(int j=0; j<i; j++) {
+        long long int times = 1;
+        long long int fac = s.size();
+        long long int iFactorial = 1;
+        for(long long int j=0; j<i; j++) {
             iFactorial = iFactorial*(i - j);
             times = times * fac;
             fac = fac - 1;
