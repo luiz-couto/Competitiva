@@ -26,10 +26,28 @@ int main() {
     if (n > 2)  
         s.insert(n);  
 
-    for(auto p:s) {
-        cout << p << " - ";
+    // for(auto p:s) {
+    //     cout << p << " - ";
+    // }
+    
+    //cout << s.size() << endl;
+
+    int despojados = 0;
+
+    for(int i=s.size(); i>1; i--) {
+        int times = 1;
+        int fac = s.size();
+        int iFactorial = 1;
+        for(int j=0; j<i; j++) {
+            iFactorial = iFactorial*(i - j);
+            times = times * fac;
+            fac = fac - 1;
+        }
+        times = times/iFactorial;
+        despojados = despojados + times;
     }
-    cout << endl;
+
+    cout << despojados << endl;
 
     return 0;
 }
