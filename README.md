@@ -19,7 +19,7 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1711
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1767  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2653  ✔
-* https://www.urionlinejudge.com.br/judge/pt/problems/view/2661
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2661  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2667
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2683
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2784
