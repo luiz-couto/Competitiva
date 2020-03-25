@@ -2,10 +2,26 @@
 
 using namespace std;
 
-int main() {
-    vector<bool> teatro;
-    vector<vector<int> > swit;
+vector<bool> teatro;
+vector<vector<int> > swit;
 
+bool verificaTudoApagado() {
+    // for(auto u:teatro){
+    //     cout << u << " ";
+    // }
+    // cout << endl;
+    for(auto l:teatro) {
+        if(l == true){
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+int main() {
+    
     int numSwit, numLam;
 
     cin >> numSwit >> numLam;
@@ -41,12 +57,35 @@ int main() {
         
     }
 
-    for(auto i:swit){
-        for(auto j:i) {
-            cout << j << " - ";
+    // for(auto i:swit){
+    //     for(auto j:i) {
+    //         cout << j << " - ";
+    //     }
+    //     cout << endl;
+    // }
+
+    int contador = 0;
+    int help = 0;
+    while(help < 10) {
+        for (int i = 0; i < swit.size(); i++)
+        {
+            contador++;
+            for(auto l:swit[i]) {
+                teatro[l] = !teatro[l];
+            }
+            if(verificaTudoApagado()) {
+                help = 1;
+                break;
+            }
         }
-        cout << endl;
+        if(help == 1){
+            break;
+        }
+        
+        
     }
+
+    cout << contador << endl;
     
     
     
