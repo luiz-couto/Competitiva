@@ -5,6 +5,8 @@ using namespace std;
 vector<bool> teatro;
 vector<vector<int> > swit;
 
+int iter = 0;
+
 bool verificaTudoApagado() {
     // for(auto u:teatro){
     //     cout << u << " ";
@@ -66,9 +68,10 @@ int main() {
 
     int contador = 0;
     int help = 0;
-    while(help < 10) {
+    while(1) {
         for (int i = 0; i < swit.size(); i++)
         {
+            iter++;
             contador++;
             for(auto l:swit[i]) {
                 teatro[l] = !teatro[l];
@@ -81,13 +84,19 @@ int main() {
         if(help == 1){
             break;
         }
+        if(iter > 100000) {
+            help = 2;
+            break;
+        }
         
         
     }
 
-    cout << contador << endl;
-    
-    
-    
+    if(help == 2){
+        cout << -1 << endl;
+    } else {
+        cout << contador << endl;
+    }
+
     return 0;
 }
