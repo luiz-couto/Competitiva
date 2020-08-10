@@ -36,6 +36,10 @@ int escolheCartaParaPassar(int currentPlayer) {
         playersCards[currentPlayer].erase(playersCards[currentPlayer].begin() + currentIndex + 1);
         return cartasOrdenadas[currentIndex + 1];
       } else {
+        if (cartasOrdenadas.size() == 4) {
+          playersCards[currentPlayer].erase(playersCards[currentPlayer].begin() + currentIndex + 1);
+          return cartasOrdenadas[currentIndex + 1];
+        }
         playersCards[currentPlayer].erase(playersCards[currentPlayer].begin() + currentIndex + 2);
         return cartasOrdenadas[currentIndex + 2];
       }
@@ -85,6 +89,10 @@ int main() {
     }
 
     sort(playerHand.begin(), playerHand.end());
+    if (k != i + 1 && playerHand[0] == playerHand[3]) {
+      cout << i + 1 << endl;
+      return 0;
+    }
     playersCards.push_back(playerHand);
 
   }
@@ -139,8 +147,6 @@ int main() {
     }
 
   }
-
-  
 
   return 0;
 }
