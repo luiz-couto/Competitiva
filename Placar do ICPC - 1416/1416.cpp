@@ -2,6 +2,8 @@
 
 using namespace std;
 
+int errorPenalty = 25;
+
 struct Problem {
   bool wasSolved;
   int timeToSolve;
@@ -21,6 +23,36 @@ struct Team {
     this->teamIndex = teamIndex;
     this->numberOfSolvedProblems = numberOfSolvedProblems;
     this->teamProblems = {};
+  }
+};
+
+int calculateTeamPenalty(vector<Problem> teamProblems) {
+  int penalty = 0;
+  for (int i=0; i<teamProblems.size(); i++) {
+    int consideredTime = teamProblems[i].timeToSolve;
+    if (consideredTime == -1) {
+      consideredTime = 0;
+    }
+    int problemPenalty = consideredTime + (errorPenalty * teamProblems[i].numberOfAttempts);
+    if (teamProblems[i].timeToSolve == -1) {
+      problemPenalty = 0;
+    }
+    penalty = penalty + problemPenalty;
+  }
+  return penalty;
+}
+
+struct custom_sort {
+  inline bool operator() (const Team& team1, const Team& team2) {
+    if (team1.numberOfSolvedProblems != team2.numberOfSolvedProblems) {
+      return (team1.numberOfSolvedProblems < team2.numberOfSolvedProblems);
+    }
+    int team1_penalty = calculateTeamPenalty(team1.teamProblems);
+    int team2_penalty = calculateTeamPenalty(team2.teamProblems);
+    if (team1_penalty != team2_penalty) {
+      return team1_penalty < team2_penalty;
+    }
+    return team1.teamIndex < team2.teamIndex;
   }
 };
 
@@ -63,23 +95,30 @@ int main() {
     allTeams.push_back(currentTeam);
   }
 
-  for (int i=0; i<allTeams.size(); i++) {
-    std::cout << "{ " << endl;
-    
-    std::cout << "  teamIndex: " << allTeams[i].teamIndex << endl;
-    std::cout << "  numberOfSolvedProblems: " << allTeams[i].numberOfSolvedProblems << endl;
-    
-    std::cout << "  problems: ";
-    for (int j=0; j<numberOfProblems; j++) {
-      std::cout << "  { " << endl;
-      std::cout << "    numberOfAttempts: " << allTeams[i].teamProblems[j].numberOfAttempts << endl;
-      std::cout << "    wasSolved: " << allTeams[i].teamProblems[j].wasSolved << endl;
-      std::cout << "    timeToSolve: " << allTeams[i].teamProblems[j].timeToSolve << endl;
-      std::cout << "  } " << endl;
-    }
+  sort(allTeams.begin(), allTeams.end(), custom_sort());
 
-    std::cout << "} " << endl;
+  // for (int i=0; i<allTeams.size(); i++) {
+  //   std::cout << "{ " << endl;
+    
+  //   std::cout << "  teamIndex: " << allTeams[i].teamIndex << endl;
+  //   std::cout << "  numberOfSolvedProblems: " << allTeams[i].numberOfSolvedProblems << endl;
+    
+  //   std::cout << "  problems: ";
+  //   for (int j=0; j<numberOfProblems; j++) {
+  //     std::cout << "  { " << endl;
+  //     std::cout << "    numberOfAttempts: " << allTeams[i].teamProblems[j].numberOfAttempts << endl;
+  //     std::cout << "    wasSolved: " << allTeams[i].teamProblems[j].wasSolved << endl;
+  //     std::cout << "    timeToSolve: " << allTeams[i].teamProblems[j].timeToSolve << endl;
+  //     std::cout << "  } " << endl;
+  //   }
+
+  //   std::cout << "} " << endl;
+  // }
+
+  for (int i=0; i<allTeams.size(); i++) {
+    cout << allTeams[i].teamIndex << ", ";
   }
+  cout << endl;
 
   return 0;
 }
