@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int errorPenalty = 25;
+int errorPenalty = 20;
 
 struct Problem {
   bool wasSolved;
@@ -19,6 +19,7 @@ struct Team {
   int numberOfSolvedProblems;
   int teamIndex;
   vector<Problem> teamProblems;
+  int totalPenalty;
   Team(int teamIndex, int numberOfSolvedProblems) {
     this->teamIndex = teamIndex;
     this->numberOfSolvedProblems = numberOfSolvedProblems;
@@ -55,6 +56,15 @@ struct custom_sort {
     return team1.teamIndex < team2.teamIndex;
   }
 };
+
+bool isTheSameClassification(vector<Team> original, vector<Team> changed) {
+  for (int i=0; i<original.size(); i++) {
+    if (original[i].teamIndex != changed[i].teamIndex) {
+      return false;
+    }
+  }
+  return true;
+}
 
 int main() {
   int numberOfTeams;
@@ -95,7 +105,19 @@ int main() {
     allTeams.push_back(currentTeam);
   }
 
-  sort(allTeams.begin(), allTeams.end(), custom_sort());
+  vector<Team> allTeamsOriginal = allTeams;
+  sort(allTeamsOriginal.begin(), allTeamsOriginal.end(), custom_sort());
+
+  int inferiorLimit;
+  for (int k=1; k<=20; k++) {
+    errorPenalty = k;
+    sort(allTeams.begin(), allTeams.end(), custom_sort());
+    if (isTheSameClassification(allTeamsOriginal, allTeams)) {
+      inferiorLimit = k;
+      break;
+    }
+  }
+  cout << inferiorLimit << endl;
 
   // for (int i=0; i<allTeams.size(); i++) {
   //   std::cout << "{ " << endl;
@@ -114,6 +136,11 @@ int main() {
 
   //   std::cout << "} " << endl;
   // }
+
+  for (int i=0; i<allTeamsOriginal.size(); i++) {
+    cout << allTeamsOriginal[i].teamIndex << ", ";
+  }
+  cout << endl;
 
   for (int i=0; i<allTeams.size(); i++) {
     cout << allTeams[i].teamIndex << ", ";
