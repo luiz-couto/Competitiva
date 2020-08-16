@@ -131,6 +131,25 @@ int main() {
   }
   cout << inferiorLimit << endl;
 
+  int superiorLimit;
+  for (int k=21; k<=1000000; k++) {
+    errorPenalty = k;
+    sort(allTeams.begin(), allTeams.end(), custom_sort());
+    if (!isTheSameClassification(allTeamsOriginal, allTeams)) {
+      superiorLimit = k;
+      break;
+    }
+    if (k == 100) {
+      superiorLimit = -1;
+      break;
+    }
+  }
+  if (superiorLimit == -1) {
+    cout << "*" << endl;
+  } else {
+    cout << superiorLimit - 1 << endl;
+  }
+
   // for (int i=0; i<allTeams.size(); i++) {
   //   std::cout << "{ " << endl;
     
