@@ -73,6 +73,14 @@ bool isTheSameClassification(vector<Team> original, vector<Team> changed) {
         }
       }
     }
+
+    if (i != original.size() - 1) {
+      if (original[i].numberOfSolvedProblems == original[i+1].numberOfSolvedProblems && original[i].totalPenalty != original[i+1].totalPenalty) {
+        if (changed[i].totalPenalty == changed[i+1].totalPenalty) {
+          return false;
+        }
+      }
+    }
     
   }
   return true;
@@ -82,72 +90,86 @@ int main() {
   int numberOfTeams;
   int numberOfProblems;
 
-  cin >> numberOfTeams >> numberOfProblems;
-  vector<Team> allTeams;
+  while(1) {
+    cin >> numberOfTeams >> numberOfProblems;
+    if (numberOfTeams == 0) {
+      break;
+    }
+    errorPenalty = 20;
+    vector<Team> allTeams;
 
-  for (int i=0; i<numberOfTeams; i++) {
-    Team currentTeam = Team(i, 0);
-    for (int j=0; j<numberOfProblems; j++) {
-      string problem;
-      cin >> problem;
-      stringstream problemStream(problem);
-      string segment;
+    for (int i=0; i<numberOfTeams; i++) {
+      Team currentTeam = Team(i, 0);
+      for (int j=0; j<numberOfProblems; j++) {
+        string problem;
+        cin >> problem;
+        stringstream problemStream(problem);
+        string segment;
 
-      int numberOfAttempts;
-      bool wasSolved;
-      int timeToSolve;
-      int aux = 0;
-      while(getline(problemStream, segment, '/' )) {
-        if (aux == 0) {
-          numberOfAttempts = stoi(segment);
-          aux++;
-        } else {
-          if (segment == "-") {
-            wasSolved = false;
-            timeToSolve = -1;
+        int numberOfAttempts;
+        bool wasSolved;
+        int timeToSolve;
+        int aux = 0;
+        while(getline(problemStream, segment, '/' )) {
+          if (aux == 0) {
+            numberOfAttempts = stoi(segment);
+            aux++;
           } else {
-            wasSolved = true;
-            currentTeam.numberOfSolvedProblems++;
-            timeToSolve = stoi(segment);
+            if (segment == "-") {
+              wasSolved = false;
+              timeToSolve = -1;
+            } else {
+              wasSolved = true;
+              currentTeam.numberOfSolvedProblems++;
+              timeToSolve = stoi(segment);
+            }
           }
         }
+        currentTeam.teamProblems.push_back(Problem(numberOfAttempts, wasSolved, timeToSolve));
       }
-      currentTeam.teamProblems.push_back(Problem(numberOfAttempts, wasSolved, timeToSolve));
+      allTeams.push_back(currentTeam);
     }
-    allTeams.push_back(currentTeam);
-  }
 
-  vector<Team> allTeamsOriginal = allTeams;
-  sort(allTeamsOriginal.begin(), allTeamsOriginal.end(), custom_sort());
+    vector<Team> allTeamsOriginal = allTeams;
+    sort(allTeamsOriginal.begin(), allTeamsOriginal.end(), custom_sort());
 
-  int inferiorLimit;
-  for (int k=1; k<=20; k++) {
-    errorPenalty = k;
+    int inferiorLimit;
+    for (int k=1; k<=20; k++) {
+      errorPenalty = k;
+      sort(allTeams.begin(), allTeams.end(), custom_sort());
+      if (isTheSameClassification(allTeamsOriginal, allTeams)) {
+        inferiorLimit = k;
+        break;
+      }
+    }
+    cout << inferiorLimit << " ";
+
+    int superiorLimit;
+    errorPenalty = 10000;
     sort(allTeams.begin(), allTeams.end(), custom_sort());
     if (isTheSameClassification(allTeamsOriginal, allTeams)) {
-      inferiorLimit = k;
-      break;
-    }
-  }
-  cout << inferiorLimit << endl;
-
-  int superiorLimit;
-  for (int k=21; k<=1000000; k++) {
-    errorPenalty = k;
-    sort(allTeams.begin(), allTeams.end(), custom_sort());
-    if (!isTheSameClassification(allTeamsOriginal, allTeams)) {
-      superiorLimit = k;
-      break;
-    }
-    if (k == 100) {
       superiorLimit = -1;
-      break;
+    } else {
+      for (int k=21; k<=1000000; k++) {
+      errorPenalty = k;
+      sort(allTeams.begin(), allTeams.end(), custom_sort());
+      if (!isTheSameClassification(allTeamsOriginal, allTeams)) {
+        superiorLimit = k;
+        break;
+      }
+      if (k == 3000) {
+        superiorLimit = -1;
+        break;
+      }
     }
-  }
-  if (superiorLimit == -1) {
-    cout << "*" << endl;
-  } else {
-    cout << superiorLimit - 1 << endl;
+    }
+
+
+    if (superiorLimit == -1) {
+      cout << "*" << endl;
+    } else {
+      cout << superiorLimit - 1 << endl;
+    }
   }
 
   // for (int i=0; i<allTeams.size(); i++) {
