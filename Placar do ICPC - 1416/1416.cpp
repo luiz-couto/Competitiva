@@ -24,6 +24,7 @@ struct Team {
     this->teamIndex = teamIndex;
     this->numberOfSolvedProblems = numberOfSolvedProblems;
     this->teamProblems = {};
+    this->totalPenalty = 0;
   }
 };
 
@@ -44,12 +45,14 @@ int calculateTeamPenalty(vector<Problem> teamProblems) {
 }
 
 struct custom_sort {
-  inline bool operator() (const Team& team1, const Team& team2) {
+  inline bool operator() (Team& team1, Team& team2) {
     if (team1.numberOfSolvedProblems != team2.numberOfSolvedProblems) {
       return (team1.numberOfSolvedProblems < team2.numberOfSolvedProblems);
     }
     int team1_penalty = calculateTeamPenalty(team1.teamProblems);
+    team1.totalPenalty = team1_penalty;
     int team2_penalty = calculateTeamPenalty(team2.teamProblems);
+    team2.totalPenalty = team2_penalty;
     if (team1_penalty != team2_penalty) {
       return team1_penalty < team2_penalty;
     }
@@ -62,6 +65,15 @@ bool isTheSameClassification(vector<Team> original, vector<Team> changed) {
     if (original[i].teamIndex != changed[i].teamIndex) {
       return false;
     }
+    
+    if (i != original.size() - 1) {
+      if (original[i].numberOfSolvedProblems == original[i+1].numberOfSolvedProblems && original[i].totalPenalty == original[i+1].totalPenalty) {
+        if (changed[i].totalPenalty != changed[i+1].totalPenalty) {
+          return false;
+        }
+      }
+    }
+    
   }
   return true;
 }
@@ -124,6 +136,7 @@ int main() {
     
   //   std::cout << "  teamIndex: " << allTeams[i].teamIndex << endl;
   //   std::cout << "  numberOfSolvedProblems: " << allTeams[i].numberOfSolvedProblems << endl;
+  //   std::cout << "  totalPenalty: " << allTeams[i].totalPenalty << endl;
     
   //   std::cout << "  problems: ";
   //   for (int j=0; j<numberOfProblems; j++) {
@@ -137,15 +150,15 @@ int main() {
   //   std::cout << "} " << endl;
   // }
 
-  for (int i=0; i<allTeamsOriginal.size(); i++) {
-    cout << allTeamsOriginal[i].teamIndex << ", ";
-  }
-  cout << endl;
+  // for (int i=0; i<allTeamsOriginal.size(); i++) {
+  //   cout << allTeamsOriginal[i].teamIndex << ", ";
+  // }
+  // cout << endl;
 
-  for (int i=0; i<allTeams.size(); i++) {
-    cout << allTeams[i].teamIndex << ", ";
-  }
-  cout << endl;
+  // for (int i=0; i<allTeams.size(); i++) {
+  //   cout << allTeams[i].teamIndex << ", ";
+  // }
+  // cout << endl;
 
   return 0;
 }
