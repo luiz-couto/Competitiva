@@ -6,9 +6,11 @@ using namespace std;
 struct bro {
   string name;
   string number;
+  vector<vector<int>> finals;
   bro(string name, string number) {
     this->name = name;
     this->number = number;
+    this->finals = {};
   }
 };
 
@@ -22,10 +24,10 @@ int auxToCut(vector<int> vecLen, int pos) {
   return sum + vecLen[pos];
 }
 
-void cutString(string str, int parts) {
+void cutString(string str, int parts, int pos) {
   vector<int> vecLen (parts, 1);
   vecLen[0] = str.length() - (parts - 1);
-  vector<int> finals;
+  vector<vector<int>> finals;
 
   int numberOfIter = 0;
   while (1) {
@@ -36,13 +38,18 @@ void cutString(string str, int parts) {
     bool needsCheck = true;
     for (int i=vecLen.size() - 1; i>= 0; i--) {
       string numberInString = str.substr(str.length() - auxToCut(vecLen, i), vecLen[i]);
+      
+      if (numberInString.length() > 5) {
+        break;
+      }
+
       int numberInInt = stoi(numberInString);
       
       if (numberInString.length() > 1 && numberInString[0] == 0) {
         needsCheck = false;
         break;
       }
-      if (i != vecLen.size() - 1 && numberInInt > 1000) {
+      if (pos != myMainVec.size() - 1 && i != vecLen.size() - 1 && numberInInt > 1000) {
         needsCheck = false;
         break;
       }
@@ -59,10 +66,12 @@ void cutString(string str, int parts) {
         sum = sum + vecSub[i];
       }
       if (sum == vecSub[vecSub.size() - 1]) {
+        vector<int> onePossible;
         for (int i=0; i<vecSub.size(); i++) {
-          cout << vecSub[i] << " ";
+          onePossible.push_back(vecSub[i]);
+          //cout << vecSub[i] << " ";
         }
-        cout << endl;
+        finals.push_back(onePossible);
       }
     }
 
@@ -105,12 +114,12 @@ void cutString(string str, int parts) {
 
   }
     
-    
-    //cout << vecSub[0] << " " << vecSub[1] << " " << vecSub[2] << " " << vecSub[3]  << endl;
+  myMainVec[pos].finals = finals;
+  //cout << vecSub[0] << " " << vecSub[1] << " " << vecSub[2] << " " << vecSub[3]  << endl;
 }
 
 int main() {
-  //cutString("9519851936", 3);
+  //cutString("145310002453", 3, 0);
   
   int c;
   cin >> c;
@@ -118,14 +127,12 @@ int main() {
   for (int i=0; i<c; i++) {
     string input;
     cin >> input;
-
     int numberOfProducts = (input.length() - 6) / 2;
     
     string totalStr;
-    for (int j=0; j<4; j++) {
+    for (int j=0; j<5; j++) {
       string broStr;
       cin >> broStr;
-
       if (broStr[0] == 'T' && broStr[1] == 'P') {
         totalStr = broStr;
         break;
@@ -142,13 +149,13 @@ int main() {
       }
 
       myMainVec.push_back(bro(name, number));
-      cutString(number, numberOfProducts + 1);
+      cutString(number, numberOfProducts + 1, j);
 
     }
 
     string totalNumber = totalStr.substr(2, totalStr.length() - 2);
     myMainVec.push_back(bro("TP", totalNumber));
-    cutString(totalNumber, numberOfProducts + 1);
+    cutString(totalNumber, numberOfProducts + 1, myMainVec.size() - 1);
 
     // Printando resposta
     for(int l=1; l<=numberOfProducts; l++) {
@@ -156,8 +163,18 @@ int main() {
     }
     cout << "Totals" << endl;
 
-
-
+    for(int b=0; b<myMainVec.size(); b++) {
+      cout << myMainVec[b].name << " ";
+      for(int s=0; s<myMainVec[b].finals[0].size(); s++) {
+        cout << myMainVec[b].finals[0][s];
+        if (s != myMainVec[b].finals[0].size() - 1) {
+          cout << " ";
+        }
+      }
+      cout << endl;
+    }
+    
+    myMainVec = {};
     
   }
   
