@@ -80,7 +80,7 @@ void cutString(string str, int parts, int pos) {
 
       int numberInInt = stoi(numberInString);
       
-      if (numberInString.length() > 1 && numberInString[0] == 0) {
+      if (numberInString.length() > 1 && numberInString[0] == '0') {
         needsCheck = false;
         break;
       }
@@ -104,7 +104,6 @@ void cutString(string str, int parts, int pos) {
         vector<int> onePossible;
         for (int i=0; i<vecSub.size(); i++) {
           onePossible.push_back(vecSub[i]);
-          //cout << vecSub[i] << " ";
         }
         finals.push_back(onePossible);
       }
@@ -150,11 +149,9 @@ void cutString(string str, int parts, int pos) {
   }
     
   myMainVec[pos].finals = finals;
-  //cout << vecSub[0] << " " << vecSub[1] << " " << vecSub[2] << " " << vecSub[3]  << endl;
 }
 
 int main() {
-  //cutString("145310002453", 3, 0);
   
   int c;
   cin >> c;
@@ -191,10 +188,6 @@ int main() {
     string totalNumber = totalStr.substr(2, totalStr.length() - 2);
     myMainVec.push_back(bro("TP", totalNumber));
     cutString(totalNumber, numberOfProducts + 1, myMainVec.size() - 1);
-    
-
-    
-
 
     vector<int> vec(myMainVec.size(),0);
     combinationalRecursiv(vec, 0);
