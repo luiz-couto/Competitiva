@@ -15,6 +15,41 @@ struct bro {
 };
 
 vector<bro> myMainVec;
+vector<int> answer = {};
+
+bool verify(vector<int> positions) {
+  vector<int> sums(myMainVec[0].finals[0].size(), 0);
+  for (int bro=0; bro<myMainVec.size() - 1; bro++) {
+    vector<int> selectedFinal = myMainVec[bro].finals[positions[bro]];
+    for (int k=0; k<selectedFinal.size(); k++) {
+      sums[k] = sums[k] + selectedFinal[k];
+    }
+  }
+  for (int problem=0; problem<sums.size(); problem++) {
+    if (sums[problem] != myMainVec[myMainVec.size() - 1].finals[positions[positions.size() - 1]][problem]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void combinationalRecursiv(vector<int> comb, int pos) {
+  if (answer.size() == 0) {
+    for(int i=0; i<myMainVec[pos].finals.size(); i++) {
+      if (pos == myMainVec.size() - 1) {
+        if (verify(comb)) {
+          answer = comb;
+        }
+      } else {
+        vector<int> newComb = comb;
+        newComb[pos] = i;
+        combinationalRecursiv(newComb, pos+1);
+      }
+      
+    }
+  }
+}
 
 int auxToCut(vector<int> vecLen, int pos) {
   int sum = 0;
@@ -34,7 +69,7 @@ void cutString(string str, int parts, int pos) {
     //cout << vecLen[0] << " " << vecLen[1] << " " << vecLen[2] << " " << vecLen[3]  << endl;
     numberOfIter++;
 
-    vector<int> vecSub(parts, -1);
+    vector<int> vecSub(parts, -10000);
     bool needsCheck = true;
     for (int i=vecLen.size() - 1; i>= 0; i--) {
       string numberInString = str.substr(str.length() - auxToCut(vecLen, i), vecLen[i]);
@@ -156,6 +191,13 @@ int main() {
     string totalNumber = totalStr.substr(2, totalStr.length() - 2);
     myMainVec.push_back(bro("TP", totalNumber));
     cutString(totalNumber, numberOfProducts + 1, myMainVec.size() - 1);
+    
+
+    
+
+
+    vector<int> vec(myMainVec.size(),0);
+    combinationalRecursiv(vec, 0);
 
     // Printando resposta
     for(int l=1; l<=numberOfProducts; l++) {
@@ -165,9 +207,9 @@ int main() {
 
     for(int b=0; b<myMainVec.size(); b++) {
       cout << myMainVec[b].name << " ";
-      for(int s=0; s<myMainVec[b].finals[0].size(); s++) {
-        cout << myMainVec[b].finals[0][s];
-        if (s != myMainVec[b].finals[0].size() - 1) {
+      for(int s=0; s<myMainVec[b].finals[answer[b]].size(); s++) {
+        cout << myMainVec[b].finals[answer[b]][s];
+        if (s != myMainVec[b].finals[answer[b]].size() - 1) {
           cout << " ";
         }
       }
@@ -175,6 +217,7 @@ int main() {
     }
     
     myMainVec = {};
+    answer = {};
     
   }
   
