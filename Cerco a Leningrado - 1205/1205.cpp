@@ -21,10 +21,14 @@ struct StrategyPoint {
 
 int main() {
 
-  int n,m,k;
+  int n;
+  
+  int m,k;
   float p;
 
-  cin >> n >> m >> k >> p;
+  while (cin >> n) {
+
+  cin >> m >> k >> p;
 
   vector<StrategyPoint> cityMap;
   
@@ -93,7 +97,14 @@ int main() {
 
   }
 
-  printf("%.3f\n",  pow(p, cityMap[finalPos].shortestPathFromInitial + cityMap[initialPos].numberOfGermans));
+  if (cityMap[finalPos].shortestPathFromInitial == INT_MAX) {
+    float response = 0;
+    printf("%.3f\n", response);
+  } else {
+    printf("%.3f\n",  pow(p, cityMap[finalPos].shortestPathFromInitial + cityMap[initialPos].numberOfGermans));
+  }
+
+  }
 
   return 0;
 }
