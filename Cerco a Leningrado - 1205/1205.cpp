@@ -7,12 +7,14 @@ struct StrategyPoint {
   int numberOfGermans;
   int shortestPathFromInitial;
   int previousStrategyPoint;
+  int visited;
 
   StrategyPoint() {
     this->roadTo = {};
     this->numberOfGermans = 0;
     this->shortestPathFromInitial = INT_MAX;
     this->previousStrategyPoint = -1;
+    this->visited = false;
   }
 
 };
@@ -51,7 +53,47 @@ int main() {
   int initialPos, finalPos;
   cin >> initialPos >> finalPos;
 
+  cityMap[initialPos].shortestPathFromInitial = 0;
 
+  int currentStrategyPoint = initialPos;
+
+  for (int i=0; i<n; i++) {
+    vector<int> roadTo = cityMap[currentStrategyPoint].roadTo;
+    for (int j=0; j<roadTo.size(); j++) {
+      if (!cityMap[roadTo[j]].visited) {
+        
+        int pathSize = cityMap[currentStrategyPoint].shortestPathFromInitial + cityMap[roadTo[j]].numberOfGermans;
+
+        if (pathSize < cityMap[roadTo[j]].shortestPathFromInitial) {
+          cityMap[roadTo[j]].shortestPathFromInitial = pathSize;
+        }
+
+        cityMap[roadTo[j]].previousStrategyPoint = currentStrategyPoint;
+
+      }
+    }
+
+    cityMap[currentStrategyPoint].visited = true;
+
+    int smallestPathToInitial = INT_MAX;
+    int nextStrategyPoint = -1;
+
+    for (int k=1; k<=n; k++) {
+      if ( cityMap[k].visited == false && cityMap[k].shortestPathFromInitial <= smallestPathToInitial) {
+        smallestPathToInitial = cityMap[k].shortestPathFromInitial;
+        nextStrategyPoint = k;
+      }
+    }
+
+    if (nextStrategyPoint == -1) {
+      break;
+    }
+
+    currentStrategyPoint = nextStrategyPoint;
+
+  }
+
+  cout << (cityMap[finalPos].shortestPathFromInitial + cityMap[initialPos].numberOfGermans) << endl;
   
 
   return 0;
