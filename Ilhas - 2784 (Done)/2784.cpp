@@ -17,7 +17,6 @@ struct Island {
 
 };
 
-
 int main() {
   
   int n,m;
