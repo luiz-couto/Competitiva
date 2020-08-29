@@ -2,8 +2,20 @@
 
 using namespace std;
 
+struct StrategyPoint {
+  vector<int> roadTo;
+  int numberOfGermans;
+  int shortestPathFromInitial;
+  int previousStrategyPoint;
 
+  StrategyPoint() {
+    this->roadTo = {};
+    this->numberOfGermans = 0;
+    this->shortestPathFromInitial = INT_MAX;
+    this->previousStrategyPoint = -1;
+  }
 
+};
 
 int main() {
 
@@ -12,14 +24,19 @@ int main() {
 
   cin >> n >> m >> k >> p;
 
-  vector<int> initialVec;
-  vector<pair<int, vector<int>>> soldiersMap(n+1, make_pair(0, initialVec));
+  vector<StrategyPoint> cityMap;
+  
+  for (int i=0; i<n+1; i++) {
+    StrategyPoint sp = StrategyPoint();
+    cityMap.push_back(sp);
+  }
 
   for (int i=1; i<=m; i++) {
     int from, to;
     cin >> from >> to;
-    soldiersMap[from].second.push_back(to);
-    soldiersMap[to].second.push_back(from);
+
+    cityMap[from].roadTo.push_back(to);
+    cityMap[to].roadTo.push_back(from);
   }
 
   int a;
@@ -28,12 +45,14 @@ int main() {
   for (int i=0; i<a; i++) {
     int soldierPos;
     cin >> soldierPos;
-    soldiersMap[soldierPos].first = soldiersMap[soldierPos].first + 1;
+    cityMap[soldierPos].numberOfGermans = cityMap[soldierPos].numberOfGermans + 1;
   }
 
   int initialPos, finalPos;
   cin >> initialPos >> finalPos;
 
+
+  
 
   return 0;
 }
