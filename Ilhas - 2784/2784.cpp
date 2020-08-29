@@ -79,10 +79,24 @@ int main() {
 
   }
 
+  int smallestPing = INT_MAX;
+  int greaterPing = 0;
+
   for (int i=1; i<=n; i++) {
-    cout << worldMap[i].shortestPathFromInitial << endl;
+    if (i != initialPos) {
+      if (worldMap[i].shortestPathFromInitial < smallestPing) {
+        smallestPing = worldMap[i].shortestPathFromInitial;
+      }
+
+      if (worldMap[i].shortestPathFromInitial > greaterPing) {
+        greaterPing = worldMap[i].shortestPathFromInitial;
+      }
+
+    }
+
   }
 
+  cout << greaterPing - smallestPing << endl;
   
   return 0;
 }
