@@ -93,8 +93,7 @@ int main() {
 
   }
 
-  cout << (cityMap[finalPos].shortestPathFromInitial + cityMap[initialPos].numberOfGermans) << endl;
-  
+  printf("%.3f\n",  pow(p, cityMap[finalPos].shortestPathFromInitial + cityMap[initialPos].numberOfGermans));
 
   return 0;
 }
