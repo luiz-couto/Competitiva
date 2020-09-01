@@ -2,6 +2,8 @@
 
 using namespace std;
 
+bool findAux = false;
+
 struct Point {
   int x;
   int y;
@@ -48,6 +50,31 @@ bool checkForSensorsCollision(int px, int py, int pRadius, int qx, int qy, int q
   return false;
 }
 
+void DFS(int v, vector<bool> visited, int pointToFind, vector<Point> roomMap) {
+  visited[v] = true;
+  if (v == pointToFind) {
+    findAux = true;
+  }
+  if (!findAux) {
+    for(int i=0; i<roomMap[v].connectedTo.size(); i++) {
+      if (!visited[roomMap[v].connectedTo[i]] && !findAux) {
+        DFS(roomMap[v].connectedTo[i], visited, pointToFind, roomMap);
+      }
+    }
+  }
+}
+
+bool twoWallsConnect(int firstWall, int secondWall, int k, vector<Point> roomMap) {
+  findAux = false;
+  vector<bool> visited(k+4, false);
+  DFS(firstWall, visited, secondWall, roomMap);
+  if (findAux == true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 int main() {
   
   int m,n,k;
@@ -81,7 +108,19 @@ int main() {
 
   }
 
-  
+  // for (int i=0; i<roomMap.size(); i++) {
+  //   cout << i << " - ";
+  //   for (int j=0; j<roomMap[i].connectedTo.size(); j++) {
+  //     cout << roomMap[i].connectedTo[j] << " ";
+  //   }
+  //   cout << endl;
+  // }
+
+  if (twoWallsConnect(1,2,k,roomMap) || twoWallsConnect(0,3,k,roomMap) || twoWallsConnect(1,3,k,roomMap) || twoWallsConnect(0,2,k,roomMap)) {
+    cout << "N" << endl;
+  } else {
+    cout << "S" << endl;
+  }
 
 
   return 0;
