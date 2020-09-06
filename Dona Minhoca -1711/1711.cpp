@@ -10,14 +10,25 @@ struct Tunnel {
     this->from = from;
     this->to = to;
     this->length = length;
+  };
+  Tunnel() {
+    this->from = -1;
+    this->to = -1;
+    this->length = -1;
   }
 };
 
 struct Saloon {
+  
   vector<Tunnel> connectedTo;
+  // For DFS
   Tunnel parent;
   int status;
   int cycleNumber;
+  Saloon() {
+    this->connectedTo = {};
+  }
+
 };
 
 struct Cycle {
@@ -79,8 +90,36 @@ void findAllCycles(int currentSaloon, Tunnel parentOfCurrent, int& cycleNumber) 
 }
 
 
-
-
 int main() {
+  
+  int s,t;
+  cin >> s >> t;
+  
+  Saloon zero;
+  cave.push_back(zero);
+
+  for (int i=0; i<s; i++) {
+    Saloon current;
+    cave.push_back(current);
+  }
+
+  for (int i=0; i<t; i++) {
+    int to,from,length;
+    cin >> to >> from >> length;
+
+    Tunnel one = Tunnel(from, to, length);
+    cave[from].connectedTo.push_back(one);
+
+    Tunnel two = Tunnel(to, from, length);
+    cave[to].connectedTo.push_back(two);
+
+  }
+
+  Tunnel init = Tunnel();
+  int cycleNumber = 0;
+  findAllCycles(1, init, cycleNumber);
+  
+  cout << cycles[0].totalLength << endl;
+
   return 0;
 }
