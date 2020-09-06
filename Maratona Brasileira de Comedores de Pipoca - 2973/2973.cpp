@@ -30,7 +30,29 @@ bool isPossibleToEatPopcorn(int time, int numberOfComp, int popPerSecond, vector
 
 
 int main() {
-  bool teste = isPossibleToEatPopcorn(4,3,4,{3,8,3,10,7});
+  
+  int n,c,t;
+  cin >> n >> c >> t;
+
+  vector<int> popcorns;
+  for (int i=0; i<n; i++) {
+    int popAmount;
+    cin >> popAmount;
+    popcorns.push_back(popAmount);
+  }
+  
+  
+  bool teste = isPossibleToEatPopcorn(10,c,t,popcorns);
+  // int secToBeTested = 100000/2;
+
+  // while(1) {
+
+
+
+  // }
+
   cout << teste << endl;
+
+
   return 0;
 }
