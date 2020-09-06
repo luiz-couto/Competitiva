@@ -42,16 +42,30 @@ int main() {
   }
   
   
-  bool teste = isPossibleToEatPopcorn(10,c,t,popcorns);
-  // int secToBeTested = 100000/2;
+  // bool teste = isPossibleToEatPopcorn(10,c,t,popcorns);
+  int first = 1;
+  int last = 100000;
 
-  // while(1) {
+  int secToBeTested = (first+last)/2;
 
+  while(1) {
 
+    bool teste = isPossibleToEatPopcorn(secToBeTested,c,t,popcorns);
+    if (teste) {
+      last = secToBeTested;
+    } else {
+      first = secToBeTested;
+    }
 
-  // }
+    if (last - first == 1) {
+      break;
+    }
 
-  cout << teste << endl;
+    secToBeTested = (first+last)/2;
+
+  }
+  
+  cout << last << endl;
 
 
   return 0;
