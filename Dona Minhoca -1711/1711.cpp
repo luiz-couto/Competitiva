@@ -193,7 +193,7 @@ int main() {
 
     int shortestWay = INT_MAX;
     for (Cycle cycle : cycles) {
-      if (cycle.totalLength >= donaMinhocaLength) {
+      if (cycle.totalLength >= donaMinhocaLength && cycle.totalLength < shortestWay) {
         for (int saloon : cycle.saloons) {
           auto it = cycle.saloons.end();
           if (caveCopy[saloon].shortestPathFromInitial != INT_MAX && it == cycle.saloons.find(caveCopy[saloon].previousSaloon)) {
