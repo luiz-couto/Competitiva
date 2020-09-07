@@ -42,7 +42,7 @@ struct Saloon {
 };
 
 struct Cycle {
-  vector<int> saloons;
+  set<int> saloons;
   int totalLength;
   Cycle() {
     this->saloons = {};
@@ -65,7 +65,7 @@ void findAllCycles(int currentSaloon, Tunnel parentOfCurrent, int& cycleNumber) 
     cycleNumber++;
     Tunnel cur = parentOfCurrent;
 
-    newCycle.saloons.push_back(cur.from);
+    newCycle.saloons.insert(cur.from);
     newCycle.totalLength = newCycle.totalLength + cur.length;
 
     cave[cur.from].cycleNumber = cycleNumber;
@@ -75,7 +75,7 @@ void findAllCycles(int currentSaloon, Tunnel parentOfCurrent, int& cycleNumber) 
       cur = cave[cur.from].parent;
       cave[cur.from].cycleNumber = cycleNumber;
 
-      newCycle.saloons.push_back(cur.from);
+      newCycle.saloons.insert(cur.from);
       newCycle.totalLength = newCycle.totalLength + cur.length;
 
     }
@@ -195,7 +195,8 @@ int main() {
     for (Cycle cycle : cycles) {
       if (cycle.totalLength >= donaMinhocaLength) {
         for (int saloon : cycle.saloons) {
-          if (caveCopy[saloon].shortestPathFromInitial != INT_MAX && !verifyIfIsInCycle(caveCopy[saloon].previousSaloon, cycle)) {
+          auto it = cycle.saloons.end();
+          if (caveCopy[saloon].shortestPathFromInitial != INT_MAX && it == cycle.saloons.find(caveCopy[saloon].previousSaloon)) {
             int pathSize = cycle.totalLength + (2*(caveCopy[saloon].shortestPathFromInitial));
             if (pathSize < shortestWay) {
               shortestWay = pathSize;
