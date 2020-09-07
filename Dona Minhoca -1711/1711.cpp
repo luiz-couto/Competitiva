@@ -111,9 +111,16 @@ bool verifyIfIsInCycle (int saloon, Cycle cycle) {
 
 int main() {
   
-  int s,t;
-  cin >> s >> t;
-  
+  int s;
+
+  while (cin >> s) {
+
+  int t;
+  cin >> t;
+
+  cave = {};
+  cycles = {};
+
   Saloon zero;
   cave.push_back(zero);
 
@@ -206,7 +213,7 @@ int main() {
 
   }
 
-
+  }
 
   return 0;
 }
