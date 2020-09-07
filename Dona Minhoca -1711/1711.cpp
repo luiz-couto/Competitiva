@@ -37,6 +37,7 @@ struct Saloon {
     this->shortestPathFromInitial = INT_MAX;
     this->previousSaloon = -1;
     this->visited = false;
+    this->cycleNumber = -1;
   }
 
 };
@@ -195,9 +196,9 @@ int main() {
     for (Cycle cycle : cycles) {
       if (cycle.totalLength >= donaMinhocaLength && cycle.totalLength < shortestWay) {
         for (int saloon : cycle.saloons) {
-          auto it = cycle.saloons.end();
           int pathSize = cycle.totalLength + (2*(caveCopy[saloon].shortestPathFromInitial));
-          if (pathSize < shortestWay && caveCopy[saloon].shortestPathFromInitial != INT_MAX && it == cycle.saloons.find(caveCopy[saloon].previousSaloon)) {
+          int currentCycle = cave[*(cycle.saloons.begin())].cycleNumber;
+          if (pathSize < shortestWay && caveCopy[saloon].shortestPathFromInitial != INT_MAX && (caveCopy[saloon].previousSaloon == -1 || caveCopy[caveCopy[saloon].previousSaloon].cycleNumber != currentCycle)) {
             shortestWay = pathSize;
           }
         }
