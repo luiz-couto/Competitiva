@@ -16,7 +16,7 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1416  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1470
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1642  ✔
-* https://www.urionlinejudge.com.br/judge/pt/problems/view/1711
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1711  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1767  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2653  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2661  ✔
