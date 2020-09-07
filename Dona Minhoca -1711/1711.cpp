@@ -21,12 +21,22 @@ struct Tunnel {
 struct Saloon {
   
   vector<Tunnel> connectedTo;
+  
   // For DFS
   Tunnel parent;
   int status;
   int cycleNumber;
+
+  // For Dijkstra
+  int shortestPathFromInitial;
+  int previousSaloon;
+  int visited;
+
   Saloon() {
     this->connectedTo = {};
+    this->shortestPathFromInitial = INT_MAX;
+    this->previousSaloon = -1;
+    this->visited = false;
   }
 
 };
@@ -119,7 +129,57 @@ int main() {
   int cycleNumber = 0;
   findAllCycles(1, init, cycleNumber);
   
-  cout << cycles[0].totalLength << endl;
+  int q;
+  cin >> q;
+
+  for (int l=0; l<q; l++) {
+    vector<Saloon> caveCopy = cave;
+    
+    int initialPos, donaMinhocaLength;
+    cin >> initialPos >> donaMinhocaLength;
+
+    caveCopy[initialPos].shortestPathFromInitial = 0;
+    int currentSaloon = initialPos;
+
+    for (int i=0; i<s; i++) { 
+      vector<Tunnel> connectedTo = caveCopy[currentSaloon].connectedTo;
+      for (int j=0; j<connectedTo.size(); j++) {
+        if (!caveCopy[connectedTo[j].to].visited) {
+
+          int pathSize = caveCopy[currentSaloon].shortestPathFromInitial + connectedTo[j].length;
+
+          if (pathSize < caveCopy[connectedTo[j].to].shortestPathFromInitial) {
+            caveCopy[connectedTo[j].to].shortestPathFromInitial = pathSize;
+            caveCopy[connectedTo[j].to].previousSaloon = currentSaloon;
+          }
+        }
+      }
+
+      caveCopy[currentSaloon].visited = true;
+
+      int smallestPathToInitial = INT_MAX;
+      int nextSaloon = -1;
+
+      for (int k=1; k<=s; k++) {
+        if (caveCopy[k].visited == false && caveCopy[k].shortestPathFromInitial <= smallestPathToInitial) {
+          smallestPathToInitial = caveCopy[k].shortestPathFromInitial;
+          nextSaloon = k;
+        }
+      }
+
+      if (nextSaloon == -1) {
+        break;
+      }
+
+      currentSaloon = nextSaloon;
+
+    }
+
+    cout << caveCopy[6].previousSaloon << endl;
+
+  }
+
+
 
   return 0;
 }
