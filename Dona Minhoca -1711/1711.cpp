@@ -196,11 +196,9 @@ int main() {
       if (cycle.totalLength >= donaMinhocaLength && cycle.totalLength < shortestWay) {
         for (int saloon : cycle.saloons) {
           auto it = cycle.saloons.end();
-          if (caveCopy[saloon].shortestPathFromInitial != INT_MAX && it == cycle.saloons.find(caveCopy[saloon].previousSaloon)) {
-            int pathSize = cycle.totalLength + (2*(caveCopy[saloon].shortestPathFromInitial));
-            if (pathSize < shortestWay) {
-              shortestWay = pathSize;
-            }
+          int pathSize = cycle.totalLength + (2*(caveCopy[saloon].shortestPathFromInitial));
+          if (pathSize < shortestWay && caveCopy[saloon].shortestPathFromInitial != INT_MAX && it == cycle.saloons.find(caveCopy[saloon].previousSaloon)) {
+            shortestWay = pathSize;
           }
         }
       }
