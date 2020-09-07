@@ -99,6 +99,15 @@ void findAllCycles(int currentSaloon, Tunnel parentOfCurrent, int& cycleNumber) 
 
 }
 
+bool verifyIfIsInCycle (int saloon, Cycle cycle) {
+  for (int s : cycle.saloons) {
+    if (saloon == s) {
+      return true;
+    }
+  }
+  return false;
+}
+
 
 int main() {
   
@@ -175,7 +184,25 @@ int main() {
 
     }
 
-    cout << caveCopy[6].previousSaloon << endl;
+    int shortestWay = INT_MAX;
+    for (Cycle cycle : cycles) {
+      if (cycle.totalLength >= donaMinhocaLength) {
+        for (int saloon : cycle.saloons) {
+          if (caveCopy[saloon].shortestPathFromInitial != INT_MAX && !verifyIfIsInCycle(caveCopy[saloon].previousSaloon, cycle)) {
+            int pathSize = cycle.totalLength + (2*(caveCopy[saloon].shortestPathFromInitial));
+            if (pathSize < shortestWay) {
+              shortestWay = pathSize;
+            }
+          }
+        }
+      }
+    }
+
+    if (shortestWay != INT_MAX) {
+      cout << shortestWay << endl;
+    } else {
+      cout << "-1" << endl;
+    }
 
   }
 
