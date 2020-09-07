@@ -155,40 +155,41 @@ int main() {
     int initialPos, donaMinhocaLength;
     cin >> initialPos >> donaMinhocaLength;
 
-    caveCopy[initialPos].shortestPathFromInitial = 0;
-    int currentSaloon = initialPos;
+    int dist[s+1];
+    int visitados[s+1];
 
-    for (int i=0; i<s; i++) { 
-      vector<Tunnel> connectedTo = caveCopy[currentSaloon].connectedTo;
-      for (int j=0; j<connectedTo.size(); j++) {
-        if (!caveCopy[connectedTo[j].to].visited) {
+    priority_queue < pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > > pq;
 
-          int pathSize = caveCopy[currentSaloon].shortestPathFromInitial + connectedTo[j].length;
+    for (int i=0; i<=s; i++) {
+      dist[i] = INT_MAX;
+      visitados[i] = false;
+    }
 
-          if (pathSize < caveCopy[connectedTo[j].to].shortestPathFromInitial) {
-            caveCopy[connectedTo[j].to].shortestPathFromInitial = pathSize;
-            caveCopy[connectedTo[j].to].previousSaloon = currentSaloon;
+    dist[initialPos] = 0;
+
+    pq.push(make_pair(dist[initialPos], initialPos));
+
+    while(!pq.empty()) {
+      pair<int, int> p = pq.top();
+      int u = p.second;
+      pq.pop();
+
+      if (visitados[u] == false) {
+        visitados[u] = true;
+        vector<Tunnel> connectedTo = caveCopy[u].connectedTo;
+        for (int i=0; i<connectedTo.size(); i++) {
+          int v = connectedTo[i].to;
+          int length = connectedTo[i].length;
+
+          if (dist[v] > (dist[u] + length)) {
+            dist[v] = dist[u] + length;
+            pq.push(make_pair(dist[v], v));
+            caveCopy[v].previousSaloon = u;
           }
+
         }
+
       }
-
-      caveCopy[currentSaloon].visited = true;
-
-      int smallestPathToInitial = INT_MAX;
-      int nextSaloon = -1;
-
-      for (int k=1; k<=s; k++) {
-        if (caveCopy[k].visited == false && caveCopy[k].shortestPathFromInitial <= smallestPathToInitial) {
-          smallestPathToInitial = caveCopy[k].shortestPathFromInitial;
-          nextSaloon = k;
-        }
-      }
-
-      if (nextSaloon == -1) {
-        break;
-      }
-
-      currentSaloon = nextSaloon;
 
     }
 
@@ -196,9 +197,9 @@ int main() {
     for (Cycle cycle : cycles) {
       if (cycle.totalLength >= donaMinhocaLength && cycle.totalLength < shortestWay) {
         for (int saloon : cycle.saloons) {
-          int pathSize = cycle.totalLength + (2*(caveCopy[saloon].shortestPathFromInitial));
+          int pathSize = cycle.totalLength + (2*(dist[saloon]));
           int currentCycle = cave[*(cycle.saloons.begin())].cycleNumber;
-          if (pathSize < shortestWay && caveCopy[saloon].shortestPathFromInitial != INT_MAX && (caveCopy[saloon].previousSaloon == -1 || caveCopy[caveCopy[saloon].previousSaloon].cycleNumber != currentCycle)) {
+          if (pathSize < shortestWay && dist[saloon] != INT_MAX && (caveCopy[saloon].previousSaloon == -1 || caveCopy[caveCopy[saloon].previousSaloon].cycleNumber != currentCycle)) {
             shortestWay = pathSize;
           }
         }
