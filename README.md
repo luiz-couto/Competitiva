@@ -14,7 +14,7 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1385  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1404  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1416  ✔
-* https://www.urionlinejudge.com.br/judge/pt/problems/view/1470
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1470  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1642  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1711  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1767  ✔
@@ -28,3 +28,17 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2962  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2971  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2973  ✔
+
+## List 2
+Links for the exercises:
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1288
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1365
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1485
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1522
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1645
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2243
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2532
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2677
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2713
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2723
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2778
