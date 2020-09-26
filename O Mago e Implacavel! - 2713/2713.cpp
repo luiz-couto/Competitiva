@@ -14,33 +14,37 @@ struct Room {
   
 };
 
-float runTheDungeon(int mana, int currentRoom, int damage, vector<Room> rooms, float timeUntilNow) {
-  if (currentRoom == rooms.size()) {
-    return timeUntilNow;
+void runTheDungeon(int mana, int currentRoom, int damage, vector<Room> rooms, float timeUntilNow) {
+  if (currentRoom != rooms.size()-1) {
+
+    float aux = dungeon[{currentRoom, damage}];
+
+
+    if (aux != 0) {
+
+      if (timeUntilNow < dungeon[{currentRoom, damage}]) {
+        dungeon[{currentRoom, damage}] = timeUntilNow;
+      }
+
+    } else {
+      dungeon[{currentRoom, damage}] = timeUntilNow;
+      float timeToPassThatPhase = timeUntilNow + (float(rooms[currentRoom].monsterLifePoints) / float(damage));
+      float timeToPassThatPhaseUsingMana = timeUntilNow + (float(rooms[currentRoom].monsterLifePoints) / float(damage + rooms[currentRoom].damageIncrease));
+      if (mana == 0) {
+        runTheDungeon(mana, currentRoom + 1, damage, rooms, timeToPassThatPhase);
+      } else {
+        runTheDungeon(mana, currentRoom + 1, damage, rooms, timeToPassThatPhase);
+        runTheDungeon(mana - 1, currentRoom + 1, (damage + rooms[currentRoom].damageIncrease), rooms, timeToPassThatPhaseUsingMana);
+      }
+    }
+  } else if (currentRoom == rooms.size() - 1) {
+    if (mana == 0){
+      dungeon[{currentRoom, damage}] = timeUntilNow + (float(rooms[currentRoom].monsterLifePoints) / float(damage));
+    } else {
+      dungeon[{currentRoom, damage}] = timeUntilNow + (float(rooms[currentRoom].monsterLifePoints) / float(damage + rooms[currentRoom].damageIncrease));
+    }
+
   }
-
-  if (dungeon[{currentRoom, damage}] != 0) {
-    return dungeon[{currentRoom, damage}];
-  }
-
-  float timeToPassThatPhase = timeUntilNow + (rooms[currentRoom].monsterLifePoints / damage);
-  float timeToPassThatPhaseUsingMana = timeUntilNow + (rooms[currentRoom].monsterLifePoints / (damage + rooms[currentRoom].damageIncrease));
-
-  if (mana == 0) {
-    
-    dungeon[{currentRoom, damage}] = runTheDungeon(mana, currentRoom + 1, damage, rooms, timeToPassThatPhase);
-    // cout <<  dungeon[{currentRoom, damage}] << endl;
-    return dungeon[{currentRoom, damage}];
-  
-  } else {
-    
-    dungeon[{currentRoom, damage}] = min(runTheDungeon(mana, currentRoom + 1, damage, rooms, timeToPassThatPhase), 
-    runTheDungeon(mana - 1, currentRoom + 1, (damage + rooms[currentRoom].damageIncrease), rooms, timeToPassThatPhaseUsingMana));
-    cout <<  dungeon[{currentRoom, damage}] << endl;
-    return dungeon[{currentRoom, damage}];
-  
-  }
-
 
 }
 
@@ -65,8 +69,11 @@ int main() {
     rooms.push_back(r);
   }
 
-  cout << runTheDungeon(k, 0, v, rooms, 0) << endl;
-
+  runTheDungeon(k, 0, v, rooms, 0);
+  for (auto i : dungeon) {
+    if (i.first.first == n-1)
+      cout << i.second << endl;
+  }
 
   return 0;
 }
