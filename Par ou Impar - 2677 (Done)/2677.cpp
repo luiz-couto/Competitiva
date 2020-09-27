@@ -22,7 +22,7 @@ void runAll(int n) {
       if (i%2 == 0) {
         dp[j][i + j] = min(dp[j+1][i+j], dp[j][(i+j)-1]);
       } else {
-        dp[j][i + j] = max(dp[j+1][i+j] + int(!(seq[j]%2)), dp[j][(i+j)-1] + int(!(seq[i+j]%2)));
+        dp[j][i + j] = max(dp[j+1][i+j] + !seq[j], dp[j][(i+j)-1] + !seq[i+j]);
       }
 
     }
