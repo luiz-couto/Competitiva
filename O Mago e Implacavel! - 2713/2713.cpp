@@ -12,7 +12,8 @@ struct Room {
   
 };
 
-float runTheDungeon(int mana, int currentRoom, int damage, vector<Room> rooms, float** dp) {
+float runTheDungeon(int mana, int currentRoom, int damage, vector<Room> rooms, float** dp, vector<float> sumIfManaEqualsZero) {
+  
   if (currentRoom == rooms.size()) {
     return 0;
   }
@@ -22,14 +23,23 @@ float runTheDungeon(int mana, int currentRoom, int damage, vector<Room> rooms, f
   }
 
   if (mana == 0) {
+  
+    // dp[currentRoom][mana] = float(float(rooms[currentRoom].monsterLifePoints) / float(damage)) + runTheDungeon(mana, currentRoom + 1, damage, rooms, dp, sumIfManaEqualsZero);
+    // return dp[currentRoom][mana];
 
-    dp[currentRoom][mana] = float(float(rooms[currentRoom].monsterLifePoints) / float(damage)) + runTheDungeon(mana, currentRoom + 1, damage, rooms, dp);
+    dp[currentRoom][mana] = sumIfManaEqualsZero[rooms.size()-1] - sumIfManaEqualsZero[currentRoom] + float(float(rooms[currentRoom].monsterLifePoints) / float(damage));
     return dp[currentRoom][mana];
   
-  } else {
+  } else if (mana >= rooms.size() - currentRoom) {
     
-    dp[currentRoom][mana] = min(float(float(rooms[currentRoom].monsterLifePoints) / float(damage)) + runTheDungeon(mana, currentRoom + 1, damage, rooms, dp), 
-    float(float(rooms[currentRoom].monsterLifePoints) / float(damage + rooms[currentRoom].damageIncrease)) + runTheDungeon(mana - 1, currentRoom + 1, damage, rooms, dp));
+    // Not sure if that works
+    dp[currentRoom][mana] = float(float(rooms[currentRoom].monsterLifePoints) / float(damage + rooms[currentRoom].damageIncrease)) + runTheDungeon(mana - 1, currentRoom + 1, damage, rooms, dp, sumIfManaEqualsZero);
+    return dp[currentRoom][mana];
+
+  } else {
+
+    dp[currentRoom][mana] = min(float(float(rooms[currentRoom].monsterLifePoints) / float(damage)) + runTheDungeon(mana, currentRoom + 1, damage, rooms, dp, sumIfManaEqualsZero), 
+    float(float(rooms[currentRoom].monsterLifePoints) / float(damage + rooms[currentRoom].damageIncrease)) + runTheDungeon(mana - 1, currentRoom + 1, damage, rooms, dp, sumIfManaEqualsZero));
     return dp[currentRoom][mana];
   
   }
@@ -49,6 +59,7 @@ int main() {
     cin >> k >> v;
 
     vector<Room> rooms;
+    vector<float> sumIfManaEqualsZero;
 
     for (int i=0; i<n; i++) {
       int mlp;
@@ -56,6 +67,16 @@ int main() {
       cin >> mlp >> di;
       Room r = Room(mlp, di);
       rooms.push_back(r);
+
+      float ratio = float(mlp)/float(v);
+      float before;
+      if (i == 0) {
+        before = 0;
+      } else {
+        before = sumIfManaEqualsZero[i-1];
+      }
+      sumIfManaEqualsZero.push_back(ratio+before);
+
     }
 
     float** dp;
@@ -68,7 +89,7 @@ int main() {
       for (int j = 0; j < k + 1; j++) 
         dp[i][j] = -1; 
 
-    printf("%.4f\n", runTheDungeon(k, 0, v, rooms, dp));
+    printf("%.4f\n", runTheDungeon(k, 0, v, rooms, dp, sumIfManaEqualsZero));
   }
 
   return 0;
