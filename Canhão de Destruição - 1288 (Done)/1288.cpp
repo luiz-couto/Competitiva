@@ -9,8 +9,6 @@ int cmp;
 
 int castleKnapsack(int destructions[100], int weights[100], int cannonCharge, int n, int currentProjectile) {
 
-
- 
   if (currentProjectile == n) {
     return 0;
   }
