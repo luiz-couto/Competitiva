@@ -35,7 +35,7 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1365
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1485
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1522  ✔
-* https://www.urionlinejudge.com.br/judge/pt/problems/view/1645
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1645  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2243  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2532
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2677
