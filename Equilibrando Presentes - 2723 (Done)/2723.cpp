@@ -43,16 +43,30 @@ int merrKrimasSon(int current, int left, int right, int n) {
 
 int main() {
 
-  int n;
-  cin >> n;
+  int c;
+  cin >> c;
 
-  rep(i, 0, n) {
-    cin >> pres[i];
+  rep(j, 0, c) {
+
+    int n;
+    cin >> n;
+
+    rep(i, 0, n) {
+      cin >> pres[i];
+    }
+
+    memset(dp, -1, sizeof dp);
+
+    int ans = merrKrimasSon(0,0,0,n);
+
+    if (ans == 0) {
+      cout << "Ho Ho Ho!" << endl;
+    } else {
+      cout << "Feliz Natal!" << endl;
+    }
+
   }
 
-  memset(dp, -1, sizeof dp);
-
-  cout << merrKrimasSon(0,0,0,n) << endl;
 
   return 0;
 }
