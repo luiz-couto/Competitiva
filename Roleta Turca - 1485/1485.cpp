@@ -15,7 +15,7 @@ int roulette[256];
 int balls[256];
 
 int playTheTurkishRoulette(int currentBall, int position, int s, int b, int positionMap[]) {
-  debug(currentBall);
+  // debug(currentBall);
   // Garantir que a primeira bola seja colocada em alguma posição
   if (currentBall == 0 && position == s-1) {
     positionMap[position] = true;
@@ -65,35 +65,39 @@ int playTheTurkishRoulette(int currentBall, int position, int s, int b, int posi
 
 int main() {
 
-  int s,b;
-  cin >> s >> b;
+  while(1) {
+    int s,b;
+    cin >> s >> b;
 
-  int positionMap[256];
-  int last;
-  int first;
-  rep(i,0,s) {
-    if (i == 0) {
-      int a,b;
-      cin >> a >> b;
-      roulette[i] = a + b;
-      first = a;
-      last = b;
-    } else if (i == s-1) {
-      roulette[i] = last + first;
-    } else {
-      int c;
-      cin >> c;
-      roulette[i] = last + c;
-      last = c;
+    if (s == 0) break;
+
+    int positionMap[256];
+    int last;
+    int first;
+    rep(i,0,s) {
+      if (i == 0) {
+        int a,b;
+        cin >> a >> b;
+        roulette[i] = a + b;
+        first = a;
+        last = b;
+      } else if (i == s-1) {
+        roulette[i] = last + first;
+      } else {
+        int c;
+        cin >> c;
+        roulette[i] = last + c;
+        last = c;
+      }
+      positionMap[i] = false;
     }
-    positionMap[i] = false;
-  }
-  debugA(roulette, s);
-  rep(i,0,b) {
-    cin >> balls[i];
-  }
+    // debugA(roulette, s);
+    rep(i,0,b) {
+      cin >> balls[i];
+    }
 
-  cout << 0 - (playTheTurkishRoulette(0, 0, s, b, positionMap)) << endl;
+    cout << 0 - (playTheTurkishRoulette(0, 0, s, b, positionMap)) << endl;
+  }
 
   return 0;
 }
