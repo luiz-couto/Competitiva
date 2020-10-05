@@ -14,33 +14,45 @@ using namespace std;
 
 int roulette[256];
 int balls[256];
+int dp[256][256];
 
-int playTheTurkishRoulette(int currentBall, int position, int s, int b, int positionMap[]) {
+int playTheTurkishRoulette(int currentBall, int position, int s, int b, int positionMap[], int firstBallPos) {
   // debug(currentBall);
   // Garantir que a primeira bola seja colocada em alguma posição
+
+
+  if (position != 0 && dp[currentBall][firstBallPos] != -1 ) {
+    return dp[currentBall][firstBallPos];
+  }
+
   if (currentBall == 0 && position == s-1) {
     positionMap[position] = true;
-    return (roulette[position]*balls[currentBall]) + playTheTurkishRoulette(currentBall + 1, 0, s, b, positionMap);
+    dp[currentBall][firstBallPos] = (roulette[position]*balls[currentBall]) + playTheTurkishRoulette(currentBall + 1, 0, s, b, positionMap, position);
+    return dp[currentBall][firstBallPos];
   }
   
   // Caso tenha uma bola nessa posição, não precisa nem continuar
   if (positionMap[position]) {
-    return INF;
+    dp[currentBall][firstBallPos] = INF;
+    return  dp[currentBall][firstBallPos];
   }
 
   // Avaliando posições não extremas
   if (position != 0 && position != s-1 && (positionMap[position-1] || positionMap[position+1])) {
-    return playTheTurkishRoulette(currentBall, position + 1, s, b, positionMap);
+    dp[currentBall][firstBallPos] = playTheTurkishRoulette(currentBall, position + 1, s, b, positionMap, firstBallPos);
+    return dp[currentBall][firstBallPos];
   }
 
   // Avaliando primeira posição
   if (position == 0 && (positionMap[position+1] || positionMap[s-1])) {
-    return playTheTurkishRoulette(currentBall, position + 1, s, b, positionMap);
+    dp[currentBall][firstBallPos] = playTheTurkishRoulette(currentBall, position + 1, s, b, positionMap, firstBallPos);
+    return dp[currentBall][firstBallPos];
   }
 
   // Avaliando última posição
   if (position == s-1 && (positionMap[position-1] || positionMap[0])) {
-    return playTheTurkishRoulette(currentBall, 0, s, b, positionMap);
+    dp[currentBall][firstBallPos] = playTheTurkishRoulette(currentBall, 0, s, b, positionMap, firstBallPos);
+    return dp[currentBall][firstBallPos];
   }
 
   int nextPosition = position+1;
@@ -53,14 +65,19 @@ int playTheTurkishRoulette(int currentBall, int position, int s, int b, int posi
   if (currentBall == b-1) {
     res2 = (roulette[position]*balls[currentBall]);  
   } else {
-    res2 = (roulette[position]*balls[currentBall]) + playTheTurkishRoulette(currentBall + 1, nextPosition, s, b, positionMap);
+    if (currentBall == 0) {
+      res2 = (roulette[position]*balls[currentBall]) + playTheTurkishRoulette(currentBall + 1, nextPosition, s, b, positionMap, position);
+    } else {
+      res2 = (roulette[position]*balls[currentBall]) + playTheTurkishRoulette(currentBall + 1, nextPosition, s, b, positionMap, firstBallPos);
+    }
   }
 
   positionMap[position] = false;
 
-  res1 = playTheTurkishRoulette(currentBall, nextPosition, s, b, positionMap);
+  res1 = playTheTurkishRoulette(currentBall, nextPosition, s, b, positionMap, firstBallPos);
 
-  return min(res1, res2);
+  dp[currentBall][firstBallPos] = min(res1, res2);
+  return dp[currentBall][firstBallPos];
 
 }
 
@@ -97,7 +114,9 @@ int main() {
       cin >> balls[i];
     }
 
-    cout << 0 - (playTheTurkishRoulette(0, 0, s, b, positionMap)) << endl;
+    memset(dp, -1, sizeof dp);
+
+    cout << 0 - (playTheTurkishRoulette(0, 0, s, b, positionMap, 0)) << endl;
   }
 
   return 0;
