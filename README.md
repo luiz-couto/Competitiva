@@ -42,3 +42,18 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2713  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2723  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2778
+
+## List 3
+Links for the exercises:
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1207
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1394
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1474
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1602
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1697
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1716
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/1904
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2082
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2123
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2337
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2674
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2734
