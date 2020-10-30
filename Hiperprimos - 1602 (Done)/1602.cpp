@@ -55,68 +55,77 @@ int main() {
   memset(numberOfDivisorsTable, -1, sizeof(numberOfDivisorsTable));
   memset(hiper, -1, sizeof(hiper));
 
-  int n;
-  while(cin >> n) {
-    int numberOfHiper = 0;
+  int numberOfHiper = 0;
 
-    repWithEqual(i, 2, n) {
-      
-      if (hiper[i] != -1) {
-        if (hiper[i] == 1) {
-          numberOfHiper++;
-        }
-        continue;
-      }
-
-      int p;
-      if (isPrimeTable[i] != -1) {
-        p = isPrimeTable[i];
-      } else {
-        p = isPrime(i);
-      }
-
-      if (p == 1) {
-        isPrimeTable[i] = 1;
-        hiper[i] = 1;
+  repWithEqual(i, 2, 2000000) {
+    
+    if (hiper[i] != -1) {
+      if (hiper[i] == 1) {
         numberOfHiper++;
-        continue;
       }
-      isPrimeTable[i] = 0;
-
-      int a = (int)sqrt(i);
-      if(a != sqrt(i)) {
-        hiper[i] = 0;
-        continue;
-      }
-
-      int nd;
-      if (numberOfDivisorsTable[i] != -1) {
-        nd = numberOfDivisorsTable[i];
-      } else {
-        nd = countDivisors(i);
-        numberOfDivisorsTable[i] = nd;
-      }
-
-     
-      if (isPrimeTable[nd] != -1) {
-        if (isPrimeTable[nd] == 1) {
-          hiper[i] = 1;
-          numberOfHiper++;
-        }
-      } else {
-        int checkPrime = isPrime(nd);
-        isPrimeTable[nd] = checkPrime;
-        if (checkPrime == 1) {
-          hiper[i] = 1;
-          numberOfHiper++;
-        } else {
-          hiper[i] = 0;
-        }
-      }
+      resultTable[i] = numberOfHiper;
+      continue;
     }
 
-    cout << numberOfHiper << endl;
+    int p;
+    if (isPrimeTable[i] != -1) {
+      p = isPrimeTable[i];
+    } else {
+      p = isPrime(i);
+    }
 
+    if (p == 1) {
+      isPrimeTable[i] = 1;
+      hiper[i] = 1;
+      numberOfHiper++;
+      resultTable[i] = numberOfHiper;
+      continue;
+    }
+    isPrimeTable[i] = 0;
+
+    int a = (int)sqrt(i);
+    if(a != sqrt(i)) {
+      hiper[i] = 0;
+      resultTable[i] = numberOfHiper;
+      continue;
+    }
+
+    int nd;
+    if (numberOfDivisorsTable[i] != -1) {
+      nd = numberOfDivisorsTable[i];
+    } else {
+      nd = countDivisors(i);
+      numberOfDivisorsTable[i] = nd;
+    }
+
+  
+    if (isPrimeTable[nd] != -1) {
+      if (isPrimeTable[nd] == 1) {
+        hiper[i] = 1;
+        numberOfHiper++;
+      }
+      resultTable[i] = numberOfHiper;
+    } else {
+      int checkPrime = isPrime(nd);
+      isPrimeTable[nd] = checkPrime;
+      if (checkPrime == 1) {
+        hiper[i] = 1;
+        numberOfHiper++;
+        resultTable[i] = numberOfHiper;
+      } else {
+        hiper[i] = 0;
+        resultTable[i] = numberOfHiper;
+      }
+    }
+  
   }
+
+  int n;
+  while (cin >> n) {
+    cout << resultTable[n] << endl;
+  }
+
+  
+
   return 0;
 }
