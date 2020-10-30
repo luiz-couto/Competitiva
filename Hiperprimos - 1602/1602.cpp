@@ -16,6 +16,7 @@ using namespace std;
 int isPrimeTable[2*1000000];
 int numberOfDivisorsTable[2*1000000];
 int hiper[2*1000000];
+int resultTable[2*1000000];
 
 int countDivisors(int n) {
   int aux = (int)pow(n,1/2.0);
@@ -67,7 +68,14 @@ int main() {
         continue;
       }
 
-      if (isPrime(i) == 1) {
+      int p;
+      if (isPrimeTable[i] != -1) {
+        p = isPrimeTable[i];
+      } else {
+        p = isPrime(i);
+      }
+
+      if (p == 1) {
         isPrimeTable[i] = 1;
         hiper[i] = 1;
         numberOfHiper++;
