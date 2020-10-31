@@ -14,7 +14,7 @@ using namespace std;
 
 #define N 2
 
-void multiplyMatrix(int mat1[][N], int mat2[][N], int res[][N]) {
+void multiplyMatrix(int** mat1, int** mat2, int** res) {
   int i,j,k;
   rep(i,0,N) {
     rep (j,0,N) {
@@ -26,19 +26,78 @@ void multiplyMatrix(int mat1[][N], int mat2[][N], int res[][N]) {
   }
 }
 
+int** exponencial(int** m, long long int exp) {
+  if (exp == 0) {
+    int** res;
+    res = new int*[N];
+
+    res[0] = new int[N];
+    res[1] = new int[N];
+
+    res[0][0] = 1;
+    res[0][1] = 0;
+    res[1][0] = 0;
+    res[1][1] = 1;
+    return res;
+  } else {
+
+    int** res = exponencial(m, exp/2);
+    
+    int** ret;
+    int** ret2;
+    
+    ret = new int*[N];
+    ret[0] = new int[N];
+    ret[1] = new int[N];
+
+    multiplyMatrix(res, res, ret);
+
+    if (exp%2 == 1) {
+      
+      ret2 = new int*[N];
+      ret2[0] = new int[N];
+      ret2[1] = new int[N];
+
+      multiplyMatrix(ret, m, ret2);
+    }
+
+    return ret2;
+
+  }
+
+}
+
 
 int main() {
 
-  int res[N][N];
+  int** res;
 
-  int mat1[N][N] = {
-    { 1 , 2 }
-  };
+  res = new int*[N];
+  res[0] = new int[N];
+  res[1] = new int[N];
 
-  int mat2[N][N] = {
-    { 3, 4 },
-    { 5, 6 }
-  };
+  int** mat1;
+
+  mat1 = new int*[N];
+  mat1[0] = new int[N];
+  mat1[1] = new int[N];
+
+  int** mat2;
+
+  mat2 = new int*[N];
+  mat2[0] = new int[N];
+  mat2[1] = new int[N];
+
+
+  mat1[0][0] = 8;
+  mat1[0][1] = -7;
+  mat1[1][0] = 1;
+  mat1[1][1] = 0;
+
+  mat2[0][0] = 8;
+  mat2[0][1] = -7;
+  mat2[1][0] = 1;
+  mat2[1][1] = 0;
 
   multiplyMatrix(mat1, mat2, res);
 
