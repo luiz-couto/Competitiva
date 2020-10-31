@@ -14,8 +14,10 @@ using namespace std;
 
 #define N 2
 
-void multiplyMatrix(int** mat1, int** mat2, int** res) {
-  int i,j,k;
+#define unsigned long long int ll;
+
+void multiplyMatrix(long long int** mat1, long long int** mat2, long long int** res) {
+  long long int i,j,k;
   rep(i,0,N) {
     rep (j,0,N) {
       res[i][j] = 0;
@@ -26,11 +28,11 @@ void multiplyMatrix(int** mat1, int** mat2, int** res) {
   }
 }
 
-int** exponencial(int** m, long long int exp) {
-  int** res;
-  res = new int*[N];
-  res[0] = new int[N];
-  res[1] = new int[N];
+long long int** exponencial(long long int** m, long long int exp) {
+  long long int** res;
+  res = new long long int*[N];
+  res[0] = new long long int[N];
+  res[1] = new long long int[N];
 
   res[0][0] = 1;
   res[0][1] = 0;
@@ -39,18 +41,18 @@ int** exponencial(int** m, long long int exp) {
 
   while (exp > 0) {
     if (exp % 2 == 1) {
-      int** ans;
-      ans = new int*[N];
-      ans[0] = new int[N];
-      ans[1] = new int[N];
+      long long int** ans;
+      ans = new long long int*[N];
+      ans[0] = new long long int[N];
+      ans[1] = new long long int[N];
       multiplyMatrix(res, m, ans);
       res = ans;
     }
 
-    int** ans2;
-    ans2 = new int*[N];
-    ans2[0] = new int[N];
-    ans2[1] = new int[N];
+    long long int** ans2;
+    ans2 = new long long int*[N];
+    ans2[0] = new long long int[N];
+    ans2[1] = new long long int[N];
 
     multiplyMatrix(m,m,ans2);
     m = ans2;
@@ -64,23 +66,23 @@ int** exponencial(int** m, long long int exp) {
 
 int main() {
 
-  int** res;
+  long long int** res;
 
-  res = new int*[N];
-  res[0] = new int[N];
-  res[1] = new int[N];
+  res = new long long int*[N];
+  res[0] = new long long int[N];
+  res[1] = new long long int[N];
 
-  int** mat1;
+  long long int** mat1;
 
-  mat1 = new int*[N];
-  mat1[0] = new int[N];
-  mat1[1] = new int[N];
+  mat1 = new long long int*[N];
+  mat1[0] = new long long int[N];
+  mat1[1] = new long long int[N];
 
-  int** mat2;
+  long long int** mat2;
 
-  mat2 = new int*[N];
-  mat2[0] = new int[N];
-  mat2[1] = new int[N];
+  mat2 = new long long int*[N];
+  mat2[0] = new long long int[N];
+  mat2[1] = new long long int[N];
 
 
   mat1[0][0] = 8;
@@ -93,7 +95,7 @@ int main() {
   mat2[1][0] = 1;
   mat2[1][1] = 0;
 
-  int** teste = exponencial(mat1, 5);
+  long long int** teste = exponencial(mat1, 15);
 
   debugM(teste, N, N);
 
