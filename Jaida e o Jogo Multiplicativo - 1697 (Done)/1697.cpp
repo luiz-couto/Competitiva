@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define INF 16000000
+#define INF 17000000
 #define _ ios_base::sync_with_stdio(0);cin.tie(0);
 #define rep(i, a, b) for(int i = int(a); i < int(b); i++)
 #define repWithEqual(i, a, b) for(int i = int(a); i <= int(b); i++)
@@ -14,29 +14,30 @@ using namespace std;
 #define setM( x, l, c, k ) { rep( i, 0, l ){ rep( j, 0, c ) x[i][j] = k;}}
 
 #define NMAX 1000010
+#define UTIL 16000000
 
 int aux[NMAX];
 int primeCounter;
 unordered_map<int,int>numbersTable;
 
-bool* isPrime = new bool[INF+20];
+bitset<INF> isPrime;
 
 void preCalc() {
-  memset(isPrime, 1, sizeof(isPrime));
+  isPrime.set();
   
   aux[0] = 1;
   aux[1] = 2;
   primeCounter = 2;
 
-  for (long long int i = 4; i<INF; i += 2) {
-    isPrime[i] = 0;
+  for (long long int i = 4; i<UTIL; i += 2) {
+    isPrime.reset(i);
   }
 
-  for (long long int i = 3; primeCounter < NMAX && i <= INF; i += 2) {
+  for (long long int i = 3; primeCounter < NMAX && i <= UTIL; i += 2) {
     if (isPrime[i]) {
       aux[primeCounter++] = i;
-      for (long long int j = i*i; j<= INF; j+=i) {
-        isPrime[j] = 0;
+      for (long long int j = i*i; j<= UTIL; j+=i) {
+        isPrime.reset(j);
       }
     }
   }
@@ -45,12 +46,14 @@ void preCalc() {
 
 int main() {
 
-  preCalc();
+  //debug(primeCounter);
 
   int numberOfInputs;
   cin >> numberOfInputs;
 
   primeCounter = 0;
+
+  preCalc();
 
   rep(i,0,numberOfInputs) {
     
