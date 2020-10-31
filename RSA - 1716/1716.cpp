@@ -14,19 +14,19 @@ using namespace std;
 #define setM( x, l, c, k ) { rep( i, 0, l ){ rep( j, 0, c ) x[i][j] = k;}}
 
 void sievePrime(int n, bool isPrime[]) {
-  isPrime[0] = isPrime[1] = false; 
-    for (int i = 2; i <= n; i++) 
-        isPrime[i] = true; 
+  if(n > 1000000) n = n/10;
   
-    for (int p = 2; p * p <= n; p++) { 
-        // If isPrime[p] is not changed, then it is 
-        // a prime 
-        if (isPrime[p] == true) { 
-            // Update all multiples of p 
-            for (int i = p * 2; i <= n; i += p) 
-                isPrime[i] = false; 
-        } 
-    }
+  isPrime[0] = false;
+  isPrime[1] = false;
+  
+  repWithEqual(i, 2, n) isPrime[i] = true;
+  for (int p = 2; p * p <= n; p++) { 
+    if (isPrime[p]) { 
+      for (int i = p * 2; i <= n; i += p) {
+        isPrime[i] = false; 
+      }
+    } 
+  }
 }
 
 int* findPrimePair(int n) 
@@ -34,18 +34,17 @@ int* findPrimePair(int n)
   static int res[2];
 
   bool* isPrime = new bool[INT_MAX];
-  sievePrime(n, isPrime); 
+  sievePrime(n, isPrime);
 
-  for (int i = 2; i < n; i++) { 
+  rep(i,2,n) {
     int x = n / i; 
 
-    if (isPrime[i] && isPrime[x] and x != i and x * i == n) { 
-      cout << i << " " << x << endl;
+    if (isPrime[i] && isPrime[x] and x != i and x * i == n) {
       res[0] = i;
       res[1] = x;
       return res;
-    } 
-  } 
+    }
+  }
 
   delete[] isPrime;
   return res;
@@ -53,57 +52,55 @@ int* findPrimePair(int n)
 
 int gcdExtended(int a, int b, int *x, int *y)  
 {  
-  // Base Case  
-  if (a == 0)  
-  {  
+
+  if (a == 0) {
     *x = 0, *y = 1;  
     return b;  
   }  
 
-  int x1, y1; // To store results of recursive call  
+  int x1, y1; 
   int gcd = gcdExtended(b%a, a, &x1, &y1);  
 
-  // Update x and y using results of recursive  
-  // call  
   *x = y1 - (b/a) * x1;  
   *y = x1;  
 
-  return gcd;  
+  return gcd;
 }
 
 int modInverse(int a, int m)  
 {  
   int x, y;  
   int g = gcdExtended(a, m, &x, &y);  
-  if (g != 1)  
-    return -1;  
-  else
-  {  
-    // m is added to handle negative x  
+  if (g != 1) return -1;  
+  else {
     int res = (x%m + m) % m;  
     return res;
   }
 }
 
-long long int expt(long long int x, long long int n,long long int M){
-    if (n < 0LL){
-      x = 1LL / x;
-      n = -n;
+long long int getMessage(long long int c, long long int d,long long int n){
+  
+  if (d < 0LL){
+    c = 1LL / c;
+    d = -d;
+  }
+  
+  if (d == 0LL) return 1LL;
+  long long int y=1LL;
+  
+  while (d > 1LL){
+    if (d%2 == 0LL) {
+      c = (c * c)%n;
+      d = d / 2LL;
     }
-    if (n == 0LL) return 1LL;
-    long long int y=1LL;
-    while (n > 1LL){
-        if (n%2==0LL){
-            x = (x * x)%M;
-            n = n / 2LL;
-        }
-        else{
-            y = (x * y)%M;
-            x = (x * x)%M;
-            n = (n-1LL)/2LL;
-        }
+    else {
+      y = (c * y)%n;
+      c = (c * c)%n;
+      d = (d-1LL)/2LL;
     }
-    return (x*y)%M;
+  }
+  
+  return (c*y)%n;
 }
 
 int main() {
@@ -113,15 +110,16 @@ int main() {
   cin >> n >> e >> c;
 
   int *p;
+
   p = findPrimePair(n);
 
   int phi = (p[0] - 1)*(p[1] - 1);
-  debug(phi);
+  //debug(phi);
 
   int D = modInverse(e, phi);
-  debug(D);
+  //debug(D);
 
-  cout << expt(c, D, n) << endl;
+  cout << getMessage(c, D, n) << endl;
   
   return 0;
 }
