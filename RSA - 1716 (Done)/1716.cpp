@@ -33,13 +33,13 @@ int* findPrimePair(int n)
 { 
   static int res[2];
 
-  bool* isPrime = new bool[INT_MAX];
+  bool* isPrime = new bool[INF];
   sievePrime(n, isPrime);
 
   rep(i,2,n) {
     int x = n / i; 
 
-    if (isPrime[i] && isPrime[x] and x != i and x * i == n) {
+    if (isPrime[i] && isPrime[x] && x != i && x * i == n) {
       res[0] = i;
       res[1] = x;
       return res;
