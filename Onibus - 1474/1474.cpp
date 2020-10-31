@@ -14,7 +14,7 @@ using namespace std;
 
 #define N 2
 
-#define unsigned long long int ll;
+#define MILLION 1000000;
 
 void multiplyMatrix(long long int** mat1, long long int** mat2, long long int** res) {
   long long int i,j,k;
@@ -66,38 +66,39 @@ long long int** exponencial(long long int** m, long long int exp) {
 
 int main() {
 
-  long long int** res;
-
-  res = new long long int*[N];
-  res[0] = new long long int[N];
-  res[1] = new long long int[N];
+  long long int n,k,l;
+  cin >> n >> k >> l;
 
   long long int** mat1;
-
   mat1 = new long long int*[N];
   mat1[0] = new long long int[N];
   mat1[1] = new long long int[N];
 
-  long long int** mat2;
+  mat1[0][0] = 1;
+  mat1[0][1] = k;
 
+  long long int** mat2;
   mat2 = new long long int*[N];
   mat2[0] = new long long int[N];
   mat2[1] = new long long int[N];
 
-
-  mat1[0][0] = 8;
-  mat1[0][1] = -7;
-  mat1[1][0] = 1;
-  mat1[1][1] = 0;
-
-  mat2[0][0] = 8;
-  mat2[0][1] = -7;
+  mat2[0][0] = 0;
+  mat2[0][1] = l;
   mat2[1][0] = 1;
-  mat2[1][1] = 0;
+  mat2[1][1] = k;
 
-  long long int** teste = exponencial(mat1, 15);
+  long long int** result = exponencial(mat2, n);
 
-  debugM(teste, N, N);
+  debugM(result, N, N);
+
+  long long int** mat3;
+  mat3 = new long long int*[N];
+  mat3[0] = new long long int[N];
+  mat3[1] = new long long int[N];
+
+  multiplyMatrix(mat1, result, mat3);
+
+  debugM(mat3, N, N);
 
   return 0;
 }
