@@ -43,25 +43,19 @@ int** exponencial(int** m, long long int exp) {
 
     int** res = exponencial(m, exp/2);
     
-    int** ret;
-    int** ret2;
+    int** ans;
     
-    ret = new int*[N];
-    ret[0] = new int[N];
-    ret[1] = new int[N];
+    ans = new int*[N];
+    ans[0] = new int[N];
+    ans[1] = new int[N];
 
-    multiplyMatrix(res, res, ret);
+    multiplyMatrix(res, res, ans);
 
     if (exp%2 == 1) {
-      
-      ret2 = new int*[N];
-      ret2[0] = new int[N];
-      ret2[1] = new int[N];
-
-      multiplyMatrix(ret, m, ret2);
+      multiplyMatrix(res, m, ans);
     }
 
-    return ret2;
+    return ans;
 
   }
 
@@ -99,9 +93,9 @@ int main() {
   mat2[1][0] = 1;
   mat2[1][1] = 0;
 
-  multiplyMatrix(mat1, mat2, res);
+  int** teste = exponencial(mat1, 10);
 
-  debugM(res, N, N);
+  debugM(teste, N, N);
 
   return 0;
 }
