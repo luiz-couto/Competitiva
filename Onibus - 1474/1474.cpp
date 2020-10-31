@@ -27,38 +27,38 @@ void multiplyMatrix(int** mat1, int** mat2, int** res) {
 }
 
 int** exponencial(int** m, long long int exp) {
-  if (exp == 0) {
-    int** res;
-    res = new int*[N];
+  int** res;
+  res = new int*[N];
+  res[0] = new int[N];
+  res[1] = new int[N];
 
-    res[0] = new int[N];
-    res[1] = new int[N];
+  res[0][0] = 1;
+  res[0][1] = 0;
+  res[1][0] = 0;
+  res[1][1] = 1;
 
-    res[0][0] = 1;
-    res[0][1] = 0;
-    res[1][0] = 0;
-    res[1][1] = 1;
-    return res;
-  } else {
-
-    int** res = exponencial(m, exp/2);
-    
-    int** ans;
-    
-    ans = new int*[N];
-    ans[0] = new int[N];
-    ans[1] = new int[N];
-
-    multiplyMatrix(res, res, ans);
-
-    if (exp%2 == 1) {
+  while (exp > 0) {
+    if (exp % 2 == 1) {
+      int** ans;
+      ans = new int*[N];
+      ans[0] = new int[N];
+      ans[1] = new int[N];
       multiplyMatrix(res, m, ans);
+      res = ans;
     }
 
-    return ans;
+    int** ans2;
+    ans2 = new int*[N];
+    ans2[0] = new int[N];
+    ans2[1] = new int[N];
+
+    multiplyMatrix(m,m,ans2);
+    m = ans2;
+
+    exp = exp / 2;
 
   }
-
+  return res;
 }
 
 
@@ -93,7 +93,7 @@ int main() {
   mat2[1][0] = 1;
   mat2[1][1] = 0;
 
-  int** teste = exponencial(mat1, 10);
+  int** teste = exponencial(mat1, 5);
 
   debugM(teste, N, N);
 
