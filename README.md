@@ -56,4 +56,4 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2123
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2337  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2674  ✔
-* https://www.urionlinejudge.com.br/judge/pt/problems/view/2734
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2734  ✔
