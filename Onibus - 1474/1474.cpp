@@ -16,8 +16,8 @@ using namespace std;
 
 #define MILLION 1000000;
 
-void multiplyMatrix(long long int** mat1, long long int** mat2, long long int** res) {
-  long long int i,j,k;
+void multiplyMatrix(unsigned long long int** mat1, unsigned long long int** mat2, unsigned long long int** res) {
+  unsigned long long int i,j,k;
   rep(i,0,N) {
     rep (j,0,N) {
       res[i][j] = 0;
@@ -26,13 +26,14 @@ void multiplyMatrix(long long int** mat1, long long int** mat2, long long int** 
       }
     }
   }
+
 }
 
-long long int** exponencial(long long int** m, long long int exp) {
-  long long int** res;
-  res = new long long int*[N];
-  res[0] = new long long int[N];
-  res[1] = new long long int[N];
+unsigned long long int** exponencial(unsigned long long int** m, unsigned long long int exp) {
+  unsigned long long int** res;
+  res = new unsigned long long int*[N];
+  res[0] = new unsigned long long int[N];
+  res[1] = new unsigned long long int[N];
 
   res[0][0] = 1;
   res[0][1] = 0;
@@ -41,18 +42,18 @@ long long int** exponencial(long long int** m, long long int exp) {
 
   while (exp > 0) {
     if (exp % 2 == 1) {
-      long long int** ans;
-      ans = new long long int*[N];
-      ans[0] = new long long int[N];
-      ans[1] = new long long int[N];
+      unsigned long long int** ans;
+      ans = new unsigned long long int*[N];
+      ans[0] = new unsigned long long int[N];
+      ans[1] = new unsigned long long int[N];
       multiplyMatrix(res, m, ans);
       res = ans;
     }
 
-    long long int** ans2;
-    ans2 = new long long int*[N];
-    ans2[0] = new long long int[N];
-    ans2[1] = new long long int[N];
+    unsigned long long int** ans2;
+    ans2 = new unsigned long long int*[N];
+    ans2[0] = new unsigned long long int[N];
+    ans2[1] = new unsigned long long int[N];
 
     multiplyMatrix(m,m,ans2);
     m = ans2;
@@ -66,35 +67,35 @@ long long int** exponencial(long long int** m, long long int exp) {
 
 int main() {
 
-  long long int n,k,l;
+  unsigned long long int n,k,l;
   cin >> n >> k >> l;
 
-  long long int** mat1;
-  mat1 = new long long int*[N];
-  mat1[0] = new long long int[N];
-  mat1[1] = new long long int[N];
+  n = n/5;
+
+  unsigned long long int** mat1;
+  mat1 = new unsigned long long int*[N];
+  mat1[0] = new unsigned long long int[N];
+  mat1[1] = new unsigned long long int[N];
 
   mat1[0][0] = 1;
   mat1[0][1] = k;
 
-  long long int** mat2;
-  mat2 = new long long int*[N];
-  mat2[0] = new long long int[N];
-  mat2[1] = new long long int[N];
+  unsigned long long int** mat2;
+  mat2 = new unsigned long long int*[N];
+  mat2[0] = new unsigned long long int[N];
+  mat2[1] = new unsigned long long int[N];
 
   mat2[0][0] = 0;
   mat2[0][1] = l;
   mat2[1][0] = 1;
   mat2[1][1] = k;
 
-  long long int** result = exponencial(mat2, n);
+  unsigned long long int** result = exponencial(mat2, n);
 
-  debugM(result, N, N);
-
-  long long int** mat3;
-  mat3 = new long long int*[N];
-  mat3[0] = new long long int[N];
-  mat3[1] = new long long int[N];
+  unsigned long long int** mat3;
+  mat3 = new unsigned long long int*[N];
+  mat3[0] = new unsigned long long int[N];
+  mat3[1] = new unsigned long long int[N];
 
   multiplyMatrix(mat1, result, mat3);
 
