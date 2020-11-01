@@ -29,8 +29,8 @@ void sievePrime(int n, bool isPrime[]) {
   }
 }
 
-int countNumberOfFactorsTwo(int n) {
-  int count = 0;
+long long int countNumberOfFactorsTwo(long long int n) {
+  long long int count = 0;
   while(1) {
     if (n%2 == 0) {
       count++;
@@ -44,7 +44,7 @@ int countNumberOfFactorsTwo(int n) {
 
 int main() {
 
-  int a,b;
+  long long int a,b;
   cin >> a >> b;
 
   if (a == b) {
@@ -52,66 +52,54 @@ int main() {
     return 0;
   }
 
-  int grt = max(a, b);
+  long long int grt = max(a, b);
 
   bool* isPrime = new bool[INF];
   
   sievePrime(grt, isPrime);
 
-  int n = 0;
+  long long int n = 0;
   repWithEqual(i,0,grt) {
     if (i >= min(a,b) && isPrime[i] == true) {
       n++;
     }
   }
 
-  int k = grt - min(a,b);
+  if (n == 0) {
+    cout << "Bob" << endl;
+    return 0;
+  }
+
+  long long int k = grt - min(a,b);
   // debug(k);
 
   
-  int above = n + k - 1;
-  int below = n - 1;
+  long long int above = n + k - 1;
+  long long int below = n - 1;
 
-  int x = 0;
-  if (above > k) {
-    int dif = above - k;
-    for (int i=above; i > above - dif; i--) {
-      x = x + countNumberOfFactorsTwo(i);
-    }
-  } 
+  long long int x = 0;
+  for (long long int i=above; i>0; i--) {
+    x = x + countNumberOfFactorsTwo(i);
+  }
+
+  long long int z = 0;
+  for (long long int i=k; i>0; i--) {
+    z = z + countNumberOfFactorsTwo(i);
+  }
+
   
-  // else if (above == k) {
-  //   cout << "Alice" << endl;
-  //   return 0;
-  // }
-  
-  int y = 0;
-  for (int i=below; i>0; i--) {
+  long long int y = 0;
+  for (long long int i=below; i>0; i--) {
     y = y + countNumberOfFactorsTwo(i);
   }
 
-  if (x > y) {
+  if (x > (y+z)) {
     cout << "Bob" << endl;
   } else {
     cout << "Alice" << endl;
   }
-
- 
-  
-
-  
-
-  //int res = factorial(n + k -1) / (factorial(k) * factorial(n - 1));
-
-  // if (res%2 == 0) {
-  //   cout << "Bob" << endl;
-  // } else {
-  //   cout << "Alice" << endl;
-  // }
-
   
   delete[] isPrime;
-
 
   return 0;
 }
