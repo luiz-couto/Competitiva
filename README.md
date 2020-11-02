@@ -57,3 +57,18 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2337  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2674  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2734  ✔
+
+## List 4
+Links for the exercises:
+* https://vjudge.net/contest/403581#problem/A
+* https://vjudge.net/contest/403581#problem/B
+* https://vjudge.net/contest/403581#problem/C
+* https://vjudge.net/contest/403581#problem/D
+* https://vjudge.net/contest/403581#problem/E
+* https://vjudge.net/contest/403581#problem/F
+* https://vjudge.net/contest/403581#problem/G
+* https://vjudge.net/contest/403581#problem/H
+* https://vjudge.net/contest/403581#problem/I
+* https://vjudge.net/contest/403581#problem/J
+* https://vjudge.net/contest/403581#problem/K
+
