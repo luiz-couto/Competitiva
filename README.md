@@ -52,7 +52,7 @@ Links for the exercises:
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1697  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1716  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/1904  ✔
-* https://www.urionlinejudge.com.br/judge/pt/problems/view/2082
+* https://www.urionlinejudge.com.br/judge/pt/problems/view/2082  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2123
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2337  ✔
 * https://www.urionlinejudge.com.br/judge/pt/problems/view/2674  ✔
