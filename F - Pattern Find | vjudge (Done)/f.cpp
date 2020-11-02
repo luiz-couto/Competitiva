@@ -8,7 +8,7 @@ using namespace std;
 #define debugLine() cout << "PASSSSOUUU AQUIIII" << endl;
 #define debug(x) cout << #x << " = " << x << endl;
 #define debug2(x,y) cout << #x << " = " << x << " --- " << #y << " = " << y << "\n";
-#define debugA(x, l) { rep(i,0,l) { cout << x[i] << " "; } printf("\n"); }
+#define debugA(x, l) { rep(i,0,l) { cout << x[i] + 1 << " "; } printf("\n"); }
 #define debugM( x, l, c ) { rep( i, 0, l ){ rep( j, 0, c ) cout << x[i][j] << " "; printf("\n");}}
 #define setM( x, l, c, k ) { rep( i, 0, l ){ rep( j, 0, c ) x[i][j] = k;}}
 
@@ -75,11 +75,37 @@ void KMP(char* pattern, char* txt) {
 
 
 int main() {
-  char txt[] = "ABABDABACDABABCABAB"; 
-  char pat[] = "ABABCABAB";
-  countOccur = 0;
-  KMP(pat, txt);
-  debug(countOccur);
-  debugA(patternFind, countOccur);
+  
+  int cases;
+  cin >> cases;
+
+  rep(nc, 0, cases) {
+    string txt;
+    string pat;
+
+    cin >> txt;
+    cin >> pat;
+
+    char* txtAsChar = &txt[0];
+    char* patAsChar = &pat[0];
+
+    // debugA(patAsChar, pat.length());
+
+    countOccur = 0;
+    KMP(patAsChar, txtAsChar);
+    
+    if (countOccur == 0) {
+      cout << "Not Found" << endl << endl;
+      continue;
+    }
+
+    cout << countOccur << endl;
+
+    debugA(patternFind, countOccur);
+
+    cout << endl;
+  
+  }
+
   return 0;
 }
