@@ -61,7 +61,7 @@ Links for the exercises:
 ## List 4
 Links for the exercises:
 * https://vjudge.net/contest/403581#problem/A
-* https://vjudge.net/contest/403581#problem/B
+* https://vjudge.net/contest/403581#problem/B  ✔
 * https://vjudge.net/contest/403581#problem/C  ✔
 * https://vjudge.net/contest/403581#problem/D
 * https://vjudge.net/contest/403581#problem/E
