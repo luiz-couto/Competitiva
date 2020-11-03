@@ -36,6 +36,7 @@ int main() {
   rep(nnc, 0, nc) {
     int n;
     cin >> n;
+    cout << "Case " << nnc + 1 << ":" << endl;
 
     vector<node *> tree;
     node* gb = new node(-1);
@@ -73,6 +74,16 @@ int main() {
       int n2;
 
       cin >> n1 >> n2;
+
+      if (n1 == 1 || n2 == 1) {
+        cout << "1" << endl;
+        continue;
+      }
+
+      if (n1 == n2) {
+        cout << n1 << endl;
+        continue;
+      }
 
       node* first = tree[n1];
       node* second = tree[n2];
@@ -112,9 +123,17 @@ int main() {
 
       vector<int>::iterator it;
 
-      
+      it = find(parentsOfFirst.begin(), parentsOfFirst.end(), n2);
+      if (it != parentsOfFirst.end()) {
+        cout << n2 << endl;
+        continue;
+      }
 
-
+      it = find(parentsOfSecond.begin(), parentsOfSecond.end(), n1);
+      if (it != parentsOfSecond.end()) {
+        cout << n1 << endl;
+        continue;
+      }
 
       rep(j, 0, parentsOfFirst.size()) {
         it = find(parentsOfSecond.begin(), parentsOfSecond.end(), parentsOfFirst[j]);
