@@ -15,7 +15,6 @@ using namespace std;
 
 const int NMAX = 1000000;
 
-int res[NMAX];
 
 int getMid(int s, int e) {
   return s + (e -s)/2;
@@ -112,6 +111,8 @@ int main() {
 
     cout << "Testcase " << nnc << ":" << endl;
 
+    int res[n];
+
     rep(i,0,n) {
       int b;
       cin >> b;
@@ -147,7 +148,7 @@ int main() {
         int r1,r2;
         cin >> r1 >> r2;
 
-        cout << abs(m - (getSum(st, size, r1, r2))) << "\n";
+        cout << abs(m - (getMax(st, r1, r2+1, size))) << "\n";
       }
 
     }
