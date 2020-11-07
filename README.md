@@ -1,4 +1,4 @@
-# Competitiva
+# Competitiva (50/59)
 A bunch of exercises of Competitive Programming Training 
 
 ## List 1
